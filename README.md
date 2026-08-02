@@ -1,6 +1,44 @@
-# branding
-branding suddomain repo
+# Sleepy Studio Brand Assets
 
-This rwepo will deploy to a subdomain to sleepystudio.xyz as branding.sleepystudio.xyz, the site will be in alignment with our main landing site and sewrve specifically as the sourc of truth as all branding media and assets for Sleepy Studio.  This site will be public wit full access to downloads in various formats, always adapting and expanding per emerging needs or gaps.  And then also this subdomin and repo will become thwew source to always use to refer to needed assets in any repos of Sleepy Studio org.  So that we do not need to store in each site repo directly ever redundatly and always pull from oour source.  And any repo needing to offer dowload access should use a modular composable instanced wwidget tool for this branding repo which allows users to download and preview assets direct from branding repo and download or share or even copy code block embed.  MAyve eventually branding widgets could expand into a neww tool widget or a type feature of ovwerall branding widget with optionl feature whewre its more focused toward power user devs who wwant quick click to clone branding repo or have all codeblocks or  mcp easy access to our branding repo for easy additon to thweir other repos.  Idea bweing bwefore diving into platform scale. this is meant to becojme perfect need for in hosue tool first, so whil building, we are buildign our need not anticipating or assumng some user consumer uswer need or want or whatever.
+Single source of truth for all Sleepy Studio logos, characters, and 3D models.
 
+## Quick Start
 
+### Use Assets
+
+```html
+<img src="https://raw.githubusercontent.com/Sleepy-Studio/branding/main/logos/svg/LogoBlack.svg" />
+```
+
+### Get Manifest
+
+```bash
+curl https://raw.githubusercontent.com/Sleepy-Studio/branding/main/assets.json
+```
+
+## What's Here?
+
+```
+logos/svg/           — Vector logos (scalable)
+logos/png/           — Raster logo formats
+characters/png/      — Mascot assets
+3d-models/glb/       — 3D models (GLTF binary)
+```
+
+## Use This Repo
+
+- **Fetch assets** instead of copying
+- **Reference via CDN** for consistency
+- **Integrate easily** — see [INTEGRATION.md](INTEGRATION.md)
+- **Request assets** — see [CONTRIBUTING.md](CONTRIBUTING.md)
+
+## Documentation
+
+- [INTEGRATION.md](INTEGRATION.md) — How to use in apps and platforms
+- [CONTRIBUTING.md](CONTRIBUTING.md) — Request or suggest assets
+- [CHANGELOG.md](CHANGELOG.md) — Asset inventory and dates
+- [assets.json](assets.json) — Full asset manifest with URLs
+
+## Deployment
+
+This repo deploys to `branding.sleepystudio.xyz` as the public, CDN-accessible source for all org brand assets. All Sleepy Studio repos and platforms fetch from here instead of storing local copies.

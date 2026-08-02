@@ -7,12 +7,13 @@
       "id": "logo-black",
       "name": "Logo Black",
       "description": "Black variant of Sleepy Studio logo",
+      "added": "2026-08-02",
       "variants": [
         {
           "format": "svg",
-          "file": "LogoBlack.svg",
+          "file": "logos/svg/LogoBlack.svg",
           "size_kb": 10.06,
-          "url": "https://raw.githubusercontent.com/Sleepy-Studio/branding/main/LogoBlack.svg",
+          "url": "https://raw.githubusercontent.com/Sleepy-Studio/branding/main/logos/svg/LogoBlack.svg",
           "mime": "image/svg+xml"
         }
       ]
@@ -21,12 +22,13 @@
       "id": "logo-black-red",
       "name": "Logo Black with Red Accent",
       "description": "Black logo with red accent variant",
+      "added": "2026-08-02",
       "variants": [
         {
           "format": "svg",
-          "file": "LogoBlackRed.svg",
+          "file": "logos/svg/LogoBlackRed.svg",
           "size_kb": 9.93,
-          "url": "https://raw.githubusercontent.com/Sleepy-Studio/branding/main/LogoBlackRed.svg",
+          "url": "https://raw.githubusercontent.com/Sleepy-Studio/branding/main/logos/svg/LogoBlackRed.svg",
           "mime": "image/svg+xml"
         }
       ]
@@ -35,12 +37,13 @@
       "id": "logo-white",
       "name": "Logo White",
       "description": "White variant of Sleepy Studio logo",
+      "added": "2026-08-02",
       "variants": [
         {
           "format": "svg",
-          "file": "LogoWhite.svg",
+          "file": "logos/svg/LogoWhite.svg",
           "size_kb": 10.34,
-          "url": "https://raw.githubusercontent.com/Sleepy-Studio/branding/main/LogoWhite.svg",
+          "url": "https://raw.githubusercontent.com/Sleepy-Studio/branding/main/logos/svg/LogoWhite.svg",
           "mime": "image/svg+xml"
         }
       ]
@@ -49,12 +52,13 @@
       "id": "logo-white-red",
       "name": "Logo White with Red Accent",
       "description": "White logo with red accent variant",
+      "added": "2026-08-02",
       "variants": [
         {
           "format": "svg",
-          "file": "LogoWhiteRed.svg",
+          "file": "logos/svg/LogoWhiteRed.svg",
           "size_kb": 10.07,
-          "url": "https://raw.githubusercontent.com/Sleepy-Studio/branding/main/LogoWhiteRed.svg",
+          "url": "https://raw.githubusercontent.com/Sleepy-Studio/branding/main/logos/svg/LogoWhiteRed.svg",
           "mime": "image/svg+xml"
         }
       ]
@@ -63,12 +67,13 @@
       "id": "sleepy-black",
       "name": "Sleepy Character - Black",
       "description": "Sleepy mascot character in black",
+      "added": "2026-08-02",
       "variants": [
         {
           "format": "png",
-          "file": "sleepyblack.png",
+          "file": "characters/png/sleepyblack.png",
           "size_kb": 15.62,
-          "url": "https://raw.githubusercontent.com/Sleepy-Studio/branding/main/sleepyblack.png",
+          "url": "https://raw.githubusercontent.com/Sleepy-Studio/branding/main/characters/png/sleepyblack.png",
           "mime": "image/png"
         }
       ]
@@ -77,12 +82,13 @@
       "id": "sleepy-yellow",
       "name": "Sleepy Character - Yellow",
       "description": "Sleepy mascot character in yellow",
+      "added": "2026-08-02",
       "variants": [
         {
           "format": "png",
-          "file": "sleepyyellow.png",
+          "file": "characters/png/sleepyyellow.png",
           "size_kb": 52.57,
-          "url": "https://raw.githubusercontent.com/Sleepy-Studio/branding/main/sleepyyellow.png",
+          "url": "https://raw.githubusercontent.com/Sleepy-Studio/branding/main/characters/png/sleepyyellow.png",
           "mime": "image/png"
         }
       ]
@@ -91,20 +97,21 @@
       "id": "logo-3d",
       "name": "Sleepy Logo - 3D Model",
       "description": "3D model of Sleepy Studio logo in GLTF binary format",
+      "added": "2026-08-02",
       "variants": [
         {
           "format": "glb",
-          "file": "SleepyLogo3d.glb",
+          "file": "3d-models/glb/SleepyLogo3d.glb",
           "size_kb": 819.83,
-          "url": "https://raw.githubusercontent.com/Sleepy-Studio/branding/main/SleepyLogo3d.glb",
+          "url": "https://raw.githubusercontent.com/Sleepy-Studio/branding/main/3d-models/glb/SleepyLogo3d.glb",
           "mime": "model/gltf-binary"
         }
       ]
     }
   ],
   "usage": {
-    "fetch_single_asset": "GET https://raw.githubusercontent.com/Sleepy-Studio/branding/main/{filename}",
+    "fetch_single_asset": "GET https://raw.githubusercontent.com/Sleepy-Studio/branding/main/{path_to_file}",
     "fetch_manifest": "GET https://raw.githubusercontent.com/Sleepy-Studio/branding/main/assets.json",
-    "documentation": "See ASSETS.md for integration guide"
+    "documentation": "See README.md for quick start, INTEGRATION.md for detailed guides"
   }
 }
