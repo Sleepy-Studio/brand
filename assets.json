@@ -1,0 +1,110 @@
+{
+  "version": "1.0.0",
+  "repository": "https://github.com/Sleepy-Studio/branding",
+  "description": "Sleepy Studio brand assets - Single source of truth for all org logos, icons, and visual assets",
+  "assets": [
+    {
+      "id": "logo-black",
+      "name": "Logo Black",
+      "description": "Black variant of Sleepy Studio logo",
+      "variants": [
+        {
+          "format": "svg",
+          "file": "LogoBlack.svg",
+          "size_kb": 10.06,
+          "url": "https://raw.githubusercontent.com/Sleepy-Studio/branding/main/LogoBlack.svg",
+          "mime": "image/svg+xml"
+        }
+      ]
+    },
+    {
+      "id": "logo-black-red",
+      "name": "Logo Black with Red Accent",
+      "description": "Black logo with red accent variant",
+      "variants": [
+        {
+          "format": "svg",
+          "file": "LogoBlackRed.svg",
+          "size_kb": 9.93,
+          "url": "https://raw.githubusercontent.com/Sleepy-Studio/branding/main/LogoBlackRed.svg",
+          "mime": "image/svg+xml"
+        }
+      ]
+    },
+    {
+      "id": "logo-white",
+      "name": "Logo White",
+      "description": "White variant of Sleepy Studio logo",
+      "variants": [
+        {
+          "format": "svg",
+          "file": "LogoWhite.svg",
+          "size_kb": 10.34,
+          "url": "https://raw.githubusercontent.com/Sleepy-Studio/branding/main/LogoWhite.svg",
+          "mime": "image/svg+xml"
+        }
+      ]
+    },
+    {
+      "id": "logo-white-red",
+      "name": "Logo White with Red Accent",
+      "description": "White logo with red accent variant",
+      "variants": [
+        {
+          "format": "svg",
+          "file": "LogoWhiteRed.svg",
+          "size_kb": 10.07,
+          "url": "https://raw.githubusercontent.com/Sleepy-Studio/branding/main/LogoWhiteRed.svg",
+          "mime": "image/svg+xml"
+        }
+      ]
+    },
+    {
+      "id": "sleepy-black",
+      "name": "Sleepy Character - Black",
+      "description": "Sleepy mascot character in black",
+      "variants": [
+        {
+          "format": "png",
+          "file": "sleepyblack.png",
+          "size_kb": 15.62,
+          "url": "https://raw.githubusercontent.com/Sleepy-Studio/branding/main/sleepyblack.png",
+          "mime": "image/png"
+        }
+      ]
+    },
+    {
+      "id": "sleepy-yellow",
+      "name": "Sleepy Character - Yellow",
+      "description": "Sleepy mascot character in yellow",
+      "variants": [
+        {
+          "format": "png",
+          "file": "sleepyyellow.png",
+          "size_kb": 52.57,
+          "url": "https://raw.githubusercontent.com/Sleepy-Studio/branding/main/sleepyyellow.png",
+          "mime": "image/png"
+        }
+      ]
+    },
+    {
+      "id": "logo-3d",
+      "name": "Sleepy Logo - 3D Model",
+      "description": "3D model of Sleepy Studio logo in GLTF binary format",
+      "variants": [
+        {
+          "format": "glb",
+          "file": "SleepyLogo3d.glb",
+          "size_kb": 819.83,
+          "url": "https://raw.githubusercontent.com/Sleepy-Studio/branding/main/SleepyLogo3d.glb",
+          "mime": "model/gltf-binary"
+        }
+      ]
+    }
+  ],
+  "usage": {
+    "fetch_single_asset": "GET https://raw.githubusercontent.com/Sleepy-Studio/branding/main/{filename}",
+    "fetch_manifest": "GET https://raw.githubusercontent.com/Sleepy-Studio/branding/main/assets.json",
+    "documentation": "See ASSETS.md for integration guide"
+  }
+}
