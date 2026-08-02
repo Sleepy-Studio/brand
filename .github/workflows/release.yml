@@ -1,0 +1,29 @@
+name: Release
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Version (semver)'
+        required: true
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Create git tag
+        run: |
+          git config user.name "Copilot App"
+          git config user.email "223556219+Copilot@users.noreply.github.com"
+          git tag -a v${{ github.event.inputs.version }} -m "Release v${{ github.event.inputs.version }}"
+          git push origin v${{ github.event.inputs.version }}
+      
+      - name: Create GitHub Release
+        run: |
+          gh release create v${{ github.event.inputs.version }} \
+            --title "Sleepy Studio Branding v${{ github.event.inputs.version }}" \
+            --notes "Asset pack release. See CHANGELOG.md for details."
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}

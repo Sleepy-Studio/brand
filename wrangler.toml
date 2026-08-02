@@ -1,0 +1,45 @@
+name = "branding-api"
+type = "javascript"
+account_id = ""
+workers_dev = true
+routes = []
+
+[env.production]
+routes = [
+  { pattern = "branding.sleepystudio.xyz/*", zone_name = "sleepystudio.xyz" }
+]
+env = "production"
+
+[build]
+cwd = "."
+command = "npm install && npm run build"
+watch_paths = ["src/**/*.ts"]
+
+[build.upload]
+format = "service-worker"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "branding"
+database_id = "db-prod"
+
+[[kv_namespaces]]
+binding = "CACHE"
+id = "cache-prod"
+preview_id = "cache-preview"
+
+[[r2_buckets]]
+binding = "BUCKET"
+bucket_name = "branding-assets"
+preview_bucket_name = "branding-assets-preview"
+
+[env.development]
+vars = { ENVIRONMENT = "development" }
+
+[[env.development.d1_databases]]
+binding = "DB"
+database_name = "branding-dev"
+database_id = "db-dev"
+
+[triggers]
+crons = ["0 */6 * * *"]

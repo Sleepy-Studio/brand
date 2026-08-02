@@ -1,0 +1,25 @@
+name: Validate Assets
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main, develop]
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Validate JSON manifest
+        run: jq . assets.json > /dev/null
+      
+      - name: Check file integrity
+        run: |
+          echo "Checking asset files..."
+          test -f "logos/svg/LogoBlack.svg" && echo "✓ LogoBlack.svg"
+          test -f "logos/svg/LogoWhite.svg" && echo "✓ LogoWhite.svg"
+          test -f "characters/png/sleepyblack.png" && echo "✓ sleepyblack.png"
+          test -f "characters/png/sleepyyellow.png" && echo "✓ sleepyyellow.png"
+          test -f "3d-models/glb/SleepyLogo3d.glb" && echo "✓ SleepyLogo3d.glb"
