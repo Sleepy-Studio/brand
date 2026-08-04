@@ -28,6 +28,7 @@ this directory:
 - `COMPONENT_PATTERNS.md` — component visual and interaction contracts.
 - `LAYOUT_AND_RESPONSIVE.md` and `INTERACTION_AND_MOTION.md` — layout and motion rules.
 - `BRANDING_INTEGRATION.md` — asset service layer; assets come from `Sleepy-Studio/branding`.
+- `COMPOSABLE_BUILD.md` — the consumable `@sleepy-studio/site-kit` package (tokens, styles, components).
 
 Subdomains and microsites should compose from these contracts rather than copy landing
 pages. Keep this directory the single reference; do not duplicate the system into
