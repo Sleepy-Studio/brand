@@ -45,6 +45,17 @@ Rules:
    with the `branding` repo's release notes.
 4. Keep the pinned base in one place per project (a single service module), per the
    `BRANDING_INTEGRATION.md` service-layer pattern.
+5. Compose theme + shared styles from the canonical kit CSS, now versioned in this repo:
+
+   ```css
+   @import "tailwindcss";
+   @import url("https://raw.githubusercontent.com/Sleepy-Studio/branding/v1.1.0/site-kit/src/tokens.css");
+   @import url("https://raw.githubusercontent.com/Sleepy-Studio/branding/v1.1.0/site-kit/src/styles.css");
+   ```
+
+   `site-kit/src/tokens.css` is the stack-agnostic Layer A source (`:root` vars + Tailwind
+   v4 `@theme`); `site-kit/src/styles.css` holds the shared base + component classes
+   (cards, buttons, inputs, header, footer).
 
 Example (as implemented in `sitesite/src/services/branding.ts` and
 `sitesite/src/services/assets.ts`).

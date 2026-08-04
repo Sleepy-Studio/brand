@@ -1,0 +1,23 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap");
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+}
+
+:root {
+  --bg: #0a0a0a;
+  --bg-card: rgba(20, 20, 20, 0.6);
+  --bg-elevated: rgba(26, 26, 26, 0.7);
+  --bg-hover: rgba(34, 34, 34, 0.8);
+  --border: rgba(255, 255, 255, 0.08);
+  --border-hover: rgba(255, 255, 255, 0.14);
+  --text: #fafafa;
+  --text-muted: #a1a1a1;
+  --text-dim: #737373;
+  --accent: #ffffff;
+  --accent-hover: #e5e5e5;
+  --header-bg: rgba(10, 10, 10, 0.6);
+  --glass-blur: 16px;
+  --glass-border: rgba(255, 255, 255, 0.06);
+  --glass-highlight: rgba(255, 255, 255, 0.04);
+}
