@@ -1,5 +1,8 @@
 # Composable Site Kit
 
+> Reference: the decision record and gotchas behind this plan live in
+> `reference/SITE_KIT_REFERENCE.md`.
+
 ## Goal
 
 Promote `branding/site-kit/` from a documentation-only reference layer into a consumable
