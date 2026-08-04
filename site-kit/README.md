@@ -4,10 +4,9 @@ Reusable reference documentation distilled from `Sleepy-Studio/sitesite` for Sle
 
 This kit documents the framework, design tokens, layout rules, interaction patterns, branding integration, component expectations, accessibility requirements, and adoption guidance needed to make sibling projects visually and structurally consistent without copying project-specific application logic.
 
-The kit also ships as the consumable package `@sleepy-studio/site-kit` (private GitHub
-Packages) providing the design tokens, base styles, and shared components for composable
-builds. See `COMPOSABLE_BUILD.md` for the package layout, consumption contract, and
-milestones.
+The kit also ships as the consumable package `@sleepy-studio/site-kit` (public on npmjs)
+providing the design tokens, base styles, and shared components for composable builds.
+See `COMPOSABLE_BUILD.md` for the package layout, consumption contract, and milestones.
 
 ## Source
 
