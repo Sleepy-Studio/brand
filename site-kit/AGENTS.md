@@ -17,6 +17,22 @@ Use this directory as the canonical documentation reference when adapting a Slee
 9. Use semantic HTML and keyboard-operable controls.
 10. Do not add Three.js, character runtimes, or heavy animation solely for visual parity.
 
+## "Main sleepy sitesite style" resolution
+
+When any project or agent asks to build something "in the framework and style of the
+main sleepy sitesite" (or "match sitesite", "in sitesite style"), resolve that phrase to
+this directory:
+
+- `STACK_AND_STRUCTURE.md` — canonical stack and project structure (composable build).
+- `DESIGN_TOKENS.md` — theme, tokens, dark baseline.
+- `COMPONENT_PATTERNS.md` — component visual and interaction contracts.
+- `LAYOUT_AND_RESPONSIVE.md` and `INTERACTION_AND_MOTION.md` — layout and motion rules.
+- `BRANDING_INTEGRATION.md` — asset service layer; assets come from `Sleepy-Studio/branding`.
+
+Subdomains and microsites should compose from these contracts rather than copy landing
+pages. Keep this directory the single reference; do not duplicate the system into
+per-project style guides.
+
 ## SleepyRadio-specific instruction
 
 SleepyRadio should adopt the site tokens, header language, card surfaces, inputs, buttons, and branding service pattern. It should not adopt the landing site's scroll-snapped narrative layout, booking form, project cards, or social CTA choreography.
