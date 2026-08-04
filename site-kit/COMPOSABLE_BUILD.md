@@ -5,29 +5,51 @@
 
 ## Goal
 
-Promote `branding/site-kit/` from a documentation-only reference layer into a consumable
-package, `@sleepy-studio/site-kit`, so any Sleepy Studio subdomain or project composes its
-theme, base styles, and shared components from the branding repository instead of copying
-sitesite code. When a project asks to be built "in the framework and style of the main
-sleepy sitesite", the resolved artifact is this package plus the reference docs.
+Make Sleepy Studio's web style composable so any project ("in the framework and style of
+the main sleepy sitesite") composes theme, base styles, and shared components from the
+`branding` repository instead of copying sitesite code. This is approached in phases:
+consume **in-house from the public branding repo** today, and move to an npm package only
+once the component library is solid and confirmed.
 
-## Decisions
+## Phased approach
 
-- **Distribution**: public scoped package on npmjs.com — `@sleepy-studio/site-kit`.
-  The `branding` repository is already public, so publishing the kit publicly loses no
-  privacy while removing all registry auth for the three Sleepy Studio devs. GitHub
-  Packages was considered, but its npm registry requires a PAT on every machine even for
-  public packages, which conflicts with the "least friction" goal.
-- **Publishing**: GitHub Actions on the `branding` repo publishes on version tags using
-  an npm token stored as an organization secret. Devs never publish manually and never
-  manage registry tokens.
-- **Scope**: design tokens (Tailwind v4 `@theme` + `:root` vars), base styles, and the
-  shared React primitives from `COMPONENT_PATTERNS.md`.
-- **Style implementation**: components are styled with plain CSS classes from
-  `styles.css` (matching how sitesite implements them today). Tailwind utilities stay
-  available through the token `@theme` block for projects that use them.
+- **Phase 0 (current) — In-house consumption from the public repo.** `branding` is a
+  public repository. Projects reference its files at a **pinned release tag** (e.g.
+  `v1.0.0`) via `raw.githubusercontent.com`. No registry, no package, no auth. Works for
+  every stack — CSS tokens via `@import`/`<link>`, assets via the manifest, and React
+  projects import whatever they need directly.
+- **Phase 1+ (future) — npm package `@sleepy-studio/site-kit`.** Only once the shared
+  component library is confirmed solid (stable API, tests, visual sign-off) do we publish.
+  Distribution is a public scoped package on npmjs, published by GitHub Actions on version
+  tags using an `NPM_TOKEN` org secret. npm earns its keep specifically for React
+  components: semver, lockfiles, types, tree-shaking. It is *not* required for tokens or
+  styles.
 
-## Package layout
+## Phase 0 — how projects consume the public repo today
+
+Anchor all branding references to a pinned tag, never `main`:
+
+```ts
+const BRANDING_TAG = 'v1.0.0'
+const BRANDING_RAW_BASE =
+  `https://raw.githubusercontent.com/Sleepy-Studio/branding/${BRANDING_TAG}`
+```
+
+Rules:
+
+1. **Never hardcode `main` branch URLs** — they drift on every push to `branding`.
+2. **Build asset URLs from the manifest's relative `file` path + the pinned base**, not
+   from the absolute `url` field inside `assets.json` (the manifest currently records
+   `main`-based URLs).
+3. Bump the tag deliberately when consuming new assets or style updates, and coordinate
+   with the `branding` repo's release notes.
+4. Keep the pinned base in one place per project (a single service module), per the
+   `BRANDING_INTEGRATION.md` service-layer pattern.
+
+Example (as implemented in `sitesite/src/services/branding.ts` and
+`sitesite/src/services/assets.ts`).
+
+## Future package layout (Phase 1+)
 
 ```text
 site-kit/
@@ -51,75 +73,64 @@ site-kit/
 │       └── FloatingMark.tsx
 ```
 
-## Consumption contract
-
-Tailwind projects import tokens then styles in their own entry CSS:
+Consumption contract once published:
 
 ```css
 @import "@sleepy-studio/site-kit/styles.css";
 ```
 
-Components are imported as ESM from the package and keep domain logic in the consumer:
-
 ```tsx
 import { Button, Card, Header } from "@sleepy-studio/site-kit";
 ```
 
-Installing requires no registry configuration for any developer:
+## Phases / milestones
 
-```bash
-pnpm add @sleepy-studio/site-kit
-```
-
-## Milestones
-
-- **M1 — Package skeleton**: `package.json`, `tsconfig`, Vite lib build, empty `src/`
-  stubs, publish `v0.1.0` to npmjs.com.
-- **M2 — Extract tokens + styles**: copy sitesite `src/styles.css` tokens and shared
+- **Phase 0 — Pinned-tag in-house consumption (done).** Tag `v1.0.0` cut on `branding`;
+  `sitesite` pinned to it with tag-base + file-path URL construction.
+- **Phase 1 — Package skeleton (gated).** `package.json`, `tsconfig`, Vite lib build,
+  empty `src/` stubs; publish `v0.1.0` to npmjs. Gate: component API confirmed solid.
+- **Phase 2 — Extract tokens + styles.** Copy sitesite `src/styles.css` tokens and shared
   classes verbatim into the package; verify byte-for-byte token parity.
-- **M3 — Port shared components**: `Header`, `Card`, `Button`, `Input`, `FloatingMark`
-  from sitesite, with Vitest tests and emitted `.d.ts` types.
-- **M4 — Migrate sitesite (dogfood)**: sitesite consumes the package; remove vendored
-  tokens/shared classes; `pnpm build` + `pnpm test` green; visual parity check.
-- **M5 — CI publishing**: GitHub Actions publishes to npmjs.com on `v*` tags using the
+- **Phase 3 — Port shared components.** `Header`, `Card`, `Button`, `Input`,
+  `FloatingMark` from sitesite, with Vitest tests and emitted `.d.ts` types.
+- **Phase 4 — Migrate sitesite (dogfood).** sitesite consumes the package; remove vendored
+  tokens/shared classes; `pnpm build` green; visual parity check.
+- **Phase 5 — CI publishing.** GitHub Actions publishes to npmjs.com on `v*` tags using
   `GITHUB_TOKEN` plus the npm token from an org secret; document versioning.
-- **M6 — Lucilab adoption**: when the Lucilab Studio UI starts, compose from the package
-  instead of reimplementing.
+- **Phase 6 — Lucilab adoption.** When the Lucilab Studio UI starts, compose from the
+  package instead of reimplementing.
 
-## Prerequisite (blocked on manual step)
+## Prerequisite for Phase 1 (blocked on manual step)
 
-Before M1 can publish, one org-level npm setup is needed — this is a one-time step I
-cannot perform without npm credentials:
+Before Phase 1 can publish, one org-level npm setup is needed — a one-time step that cannot
+be performed without npm credentials:
 
 1. Create the `sleepy-studio` npm organization (or use an existing npm account).
 2. Generate an npm **access token** (`automation` type) with publish rights.
-3. Store it as an organization secret named `NPM_TOKEN` on GitHub for the
-  `Sleepy-Studio` org (used by the M5 workflow).
+3. Store it as an organization secret named `NPM_TOKEN` on GitHub for the `Sleepy-Studio`
+   org (used by the Phase 5 workflow).
 4. Optionally create the npm org user as a bot account (e.g. `sleepy-studio-bot`) so no
-  individual developer's npm login is the publishing identity.
-
-Until then, local publishing (optionally used to kick off M1) can use the same token via
-`NODE_AUTH_TOKEN`.
+   individual developer's npm login is the publishing identity.
 
 ## Verification
 
-- `vite build` and `vite-plugin-dts` output clean ESM + CSS + types.
-- `npm publish --dry-run` succeeds before any real publish.
-- sitesite `pnpm build` and `pnpm test` pass after M4.
-- Rendered look of sitesite is unchanged after migration.
-- A fresh clone of any project installs the package with `pnpm add` and no registry
+- Phase 0: `vite build` green in `sitesite`; every pinned `v1.0.0` asset URL resolves
+  (HTTP 200).
+- Phase 1+: `vite build` and `vite-plugin-dts` output clean ESM + CSS + types;
+  `npm publish --dry-run` succeeds; fresh clones install with `pnpm add` and no registry
   configuration.
 
 ## Known limitations / open items
 
-- **Public visibility**: the package is public on npmjs (the `branding` repo is already
-  public, so no additional exposure). Semver protects consumers.
-- **One-time npm org setup**: an `NPM_TOKEN` org secret and `sleepy-studio` npm org must
-  be created before CI publishing (see Prerequisite). No per-developer auth afterwards.
+- **Phase 0 ties consumers to `raw.githubusercontent.com`** — fine for a public repo, but
+  there is no semver enforcement beyond the pinned tag; asset URLs in `assets.json` still
+  point at `main`, so consumers must construct URLs from `file` + base.
+- **Worker CDN (`branding.sleepystudio.xyz`) returns 503** — the Cloudflare Worker is not
+  actually serving; do not point consumers at it until it is deployed and verified.
 - **Plain-CSS styling**: components use CSS classes, not Tailwind utility classes; this
   matches sitesite today and keeps the kit framework-light, but utility styling is not
   available on kit components out of the box.
 - **No 3D/characters**: per `AGENTS.md`, Three.js, character runtimes, and heavy motion
   are excluded from the kit.
-- **Semver coupling**: kit releases should be coordinated with sitesite so consumers pin a
-  known-good version.
+- **Semver coupling**: package releases should be coordinated with sitesite so consumers
+  pin a known-good version.

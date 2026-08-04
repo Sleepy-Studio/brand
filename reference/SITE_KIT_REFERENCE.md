@@ -2,6 +2,11 @@
 
 Status: living reference. Last updated: 2026-08-04.
 
+**Current decision (2026-08-04):** consume the kit **in-house from the public `branding`
+repo at a pinned release tag** (Phase 0). The npm package is a **future, gated phase** —
+publish `@sleepy-studio/site-kit` only once the shared component library is solid and
+confirmed. See `site-kit/COMPOSABLE_BUILD.md` for the phased plan.
+
 ## Purpose
 
 This file records *why* we are building a composable style system for Sleepy Studio web
@@ -27,17 +32,20 @@ What we did, in order:
 
 ## Distribution decision
 
-Decision: publish `@sleepy-studio/site-kit` to **npmjs.com as a public scoped package**,
-published by **GitHub Actions on version tags** using an `NPM_TOKEN` org secret.
+Decision (phased): **today** projects consume `branding` directly at a **pinned release
+tag** (Phase 0). **Future** — publish `@sleepy-studio/site-kit` to **npmjs.com as a public
+scoped package**, published by **GitHub Actions on version tags** using an `NPM_TOKEN` org
+secret.
 
 | Option | Verdict | Why |
 | --- | --- | --- |
 | GitHub Packages, private | Rejected | npm registry on GH Packages requires a classic PAT with `read:packages` on **every** machine, even for public packages; add SSO authorization on top. Too much friction for a 3-dev org. |
 | GitHub Packages, public | Rejected | Same auth requirement — GH Packages npm registry does not allow anonymous pulls. Public/private changes nothing about friction. |
-| **Public npmjs (chosen)** | Chosen | Plain `pnpm add @sleepy-studio/site-kit`. No `.npmrc`, no PATs, works on CI and clean clones. `branding` is already a public repo, so no privacy is lost. |
+| **Public npmjs (future phase)** | Chosen for later | Plain `pnpm add @sleepy-studio/site-kit`. No `.npmrc`, no PATs, works on CI and clean clones. `branding` is already a public repo, so no privacy is lost. |
+| **In-house pinned-tag (current)** | Chosen now | No registry, no package, no auth. `branding` is public; projects `@import`/`<link>` CSS and reference assets at a pinned `raw.githubusercontent.com` tag. |
 | Git dependency / vendored | Fallback | Cannot cleanly install a subdirectory of a git repo as a package (npm/pnpm git deps target the repo root). No semver, no lockfile, drifts. |
 
-Dev workflow that results:
+Dev workflow once the npm phase starts (not needed during Phase 0):
 
 - Install: `pnpm add @sleepy-studio/site-kit` — nothing else, for any of the 3 devs
   (`drdogeDOTeth`, `HowieDuhzit`, `sleepysdevin`).
@@ -118,20 +126,30 @@ the npm package entirely.
 - `branding/` already has: `assets.json` (canonical manifest), an unpublished
   `@sleepy-studio/branding` SDK (react/vue subpaths, Python + Go clients), and a Cloudflare
   Worker `branding-api` at `branding.sleepystudio.xyz` (D1 + KV cache + R2 + 6-hour cron).
-- Inconsistency worth revisiting (not blocking): `sitesite/src/services/branding.ts`
-  hardcodes `raw.githubusercontent.com` URLs rather than using the Worker CDN.
+- **Resolved inconsistency**: `sitesite/src/services/branding.ts` and
+  `sitesite/src/services/assets.ts` hardcoded `raw.githubusercontent.com/main` URLs.
+  Fixed by pinning to the `v1.0.0` tag and constructing URLs from the manifest's relative
+  `file` path + pinned base. The pattern is documented in `site-kit/COMPOSABLE_BUILD.md`.
+- **Worker CDN is not serving**: `branding.sleepystudio.xyz` returns 503 "no available
+  server". Do not point consumers at it until it is actually deployed and verified; the
+  in-house pinned-tag path is the current mode.
 - GitHub Packages npm registry requires a PAT even for public packages — the core reason
   it lost to public npmjs.
 - Org members today: `drdogeDOTeth`, `HowieDuhzit`, `sleepysdevin`.
 
 ## Open items
 
-1. Create npm org `sleepy-studio` (bot account recommended), generate an `automation`
-   token, store as `NPM_TOKEN` org secret. Manual step — blocked without npm credentials.
-2. Decide where canonical tokens live: `site-kit/` in the repo vs a dedicated root
+1. **Phase 0**: tag `branding` on future asset/style changes and bump consumers together
+   (a release flow/checklist for `assets.json` + site-kit updates is not yet written).
+2. **npm (Phase 1+, deferred)**: create npm org `sleepy-studio` (bot account
+   recommended), generate an `automation` token, store as `NPM_TOKEN` org secret. Manual
+   step — blocked without npm credentials.
+3. **Worker CDN**: decide whether to revive `branding-api` (deploy + verify) or drop it;
+   consumers should not use it while it returns 503.
+4. Decide where canonical tokens live: `site-kit/` in the repo vs a dedicated root
    concern; keep it importable outside the npm package either way.
-3. Optional cleanup: point `sitesite`'s branding service at the Worker CDN.
-4. Revisit this record when the first non-React consumer appears.
+5. Revisit this record when the first non-React consumer appears, and when the component
+   library is solid enough to gate Phase 1.
 
 ## Related
 
