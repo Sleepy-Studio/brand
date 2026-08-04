@@ -44,6 +44,12 @@ html.landing-snap {
 Use `mandatory` only when every section fits the viewport. Use `proximity` when a
 section can exceed one viewport (card grids, long lists).
 
+When decisive section snapping is the priority (the signature landing feel), use
+`mandatory` even with taller sections — the tradeoff is that you cannot rest in the
+middle of a section that exceeds the viewport. Applications that mix a snapping
+landing with dense sub-routes should scope the snap to the landing route and set it
+inline on the root scroller on mount, clearing it on unmount.
+
 ## Hero
 
 Centered avatar, one strong title, one clear subtitle, one primary action, and a
