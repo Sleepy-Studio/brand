@@ -26,6 +26,7 @@ This ensures:
 | `sleepy-black` | Sleepy Character - Black | PNG | 16 KB |
 | `sleepy-yellow` | Sleepy Character - Yellow | PNG | 53 KB |
 | `logo-3d` | Sleepy Logo 3D Model | GLB | 820 KB |
+| `favicon` | Favicon (16/24/32/64px) | ICO | 4 KB |
 
 ## 🚀 Quick Start
 

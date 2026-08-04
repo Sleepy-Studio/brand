@@ -107,6 +107,21 @@
           "mime": "model/gltf-binary"
         }
       ]
+    },
+    {
+      "id": "favicon",
+      "name": "Favicon",
+      "description": "Sleepy Studio favicon (16/24/32/64px), canonical tab/browser icon",
+      "added": "2026-08-04",
+      "variants": [
+        {
+          "format": "ico",
+          "file": "favicon.ico",
+          "size_kb": 3.78,
+          "url": "https://raw.githubusercontent.com/Sleepy-Studio/branding/main/favicon.ico",
+          "mime": "image/x-icon"
+        }
+      ]
     }
   ],
   "usage": {

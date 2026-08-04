@@ -26,15 +26,25 @@ Track of all assets in the branding repository, including add dates, updates, an
 |------|--------|------|-------|--------|-------|
 | `3d-models/glb/SleepyLogo3d.glb` | GLB | 820 KB | 2026-08-02 | active | 3D logo, GLTF binary format |
 
+### Favicon
+
+| File | Format | Size | Added | Status | Notes |
+|------|--------|------|-------|--------|-------|
+| `favicon.ico` | ICO | 4 KB | 2026-08-04 | active | 16/24/32/64px multi-size favicon; canonical tab/browser icon |
+
 ## Planned Additions
 
 - [ ] WebP formats (logos, characters) — smaller file size
 - [ ] AVIF formats (next-gen compression)
 - [ ] USDZ models (iOS AR support)
-- [ ] Favicon pack (ICO, PNG variants)
+- [ ] Favicon pack (PNG variants)
 - [ ] Social media preview images (OG, Twitter, etc.)
 
 ## Version History
+
+### v1.2.0 (2026-08-04)
+- Added canonical `favicon.ico` (16/24/32/64px) and `favicon` manifest entry
+- Documented icon-only sticky-header pattern in site kit component patterns
 
 ### v1.0.0 (2026-08-02)
 - Initial asset inventory

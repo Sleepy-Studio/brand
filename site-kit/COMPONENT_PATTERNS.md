@@ -9,6 +9,8 @@ Expected characteristics:
 - compact action group centered or right-aligned
 - icon controls with accessible labels
 - no oversized navigation bar
+- actions are icon-only buttons (no text links); nav is minimal, labeled via
+  `aria-label`/`title` rather than visible text
 
 ## Cards
 
