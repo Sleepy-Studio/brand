@@ -1,44 +1,50 @@
-# Sleepy Studio Brand Assets
+# Sleepy Studio Brand
 
-Single source of truth for all Sleepy Studio logos, characters, and 3D models.
+Canonical source of truth for Sleepy Studio identity, assets, visual language, voice, motion, sound, naming, and brand manifests.
 
-## Quick Start
-
-### Use Assets
+## Use assets
 
 ```html
-<img src="https://raw.githubusercontent.com/Sleepy-Studio/branding/main/logos/svg/LogoBlack.svg" />
+<img src="https://raw.githubusercontent.com/Sleepy-Studio/brand/v1.0.0/logos/svg/LogoBlack.svg" />
 ```
 
-### Get Manifest
+## Get the manifest
 
 ```bash
-curl https://raw.githubusercontent.com/Sleepy-Studio/branding/main/assets.json
+curl https://raw.githubusercontent.com/Sleepy-Studio/brand/v1.0.0/assets.json
 ```
 
-## What's Here?
+Production consumers should pin immutable release tags rather than `main`.
 
+## Repository scope
+
+```text
+logos/
+characters/
+3d-models/
+tokens/
+icons/
+illustration/
+motion/
+sound/
+voice/
+copy/
+assets.json
 ```
-logos/svg/           — Vector logos (scalable)
-logos/png/           — Raster logo formats
-characters/png/      — Mascot assets
-3d-models/glb/       — 3D models (GLTF binary)
-```
 
-## Use This Repo
+Not every area is implemented yet, but Brand is the canonical owner as those systems are added.
 
-- **Fetch assets** instead of copying
-- **Reference via CDN** for consistency
-- **Integrate easily** — see [INTEGRATION.md](INTEGRATION.md)
-- **Request assets** — see [CONTRIBUTING.md](CONTRIBUTING.md)
+## Consumption rules
+
+- Consume Brand assets rather than redrawing or locally modifying them.
+- Generated mirrors must identify their source version and remain reproducible.
+- Luci-specific creative assets belong to [`Sleepy-Studio/lucilab`](https://github.com/Sleepy-Studio/lucilab).
+- Reusable component behavior belongs to [`Sleepy-Studio/components`](https://github.com/Sleepy-Studio/components).
+- Application repositories should document their pinned Brand release.
 
 ## Documentation
 
-- [INTEGRATION.md](INTEGRATION.md) — How to use in apps and platforms
-- [CONTRIBUTING.md](CONTRIBUTING.md) — Request or suggest assets
-- [CHANGELOG.md](CHANGELOG.md) — Asset inventory and dates
-- [assets.json](assets.json) — Full asset manifest with URLs
-
-## Deployment
-
-This repo deploys to `branding.sleepystudio.xyz` as the public, CDN-accessible source for all org brand assets. All Sleepy Studio repos and platforms fetch from here instead of storing local copies.
+- [INTEGRATION.md](INTEGRATION.md)
+- [CONTRIBUTING.md](CONTRIBUTING.md)
+- [CHANGELOG.md](CHANGELOG.md)
+- [assets.json](assets.json)
