@@ -16,6 +16,7 @@ const faviconSizes = [16, 32, 48, 64]
 const linuxSizes = [16, 32, 48, 64, 128, 256, 512]
 const windowsSizes = [16, 24, 32, 48, 64, 128, 256]
 const macSizes = [16, 32, 64, 128, 256, 512, 1024]
+const generatedDirectories = ['source', 'favicon', 'pwa', 'apple', 'linux', 'windows', 'macos']
 
 async function ensureParent(path) {
   await mkdir(dirname(path), { recursive: true })
@@ -107,7 +108,8 @@ async function writePng(path, size, options) {
 
 async function main() {
   await readFile(sourceLogo)
-  await rm(outputRoot, { recursive: true, force: true })
+  await mkdir(outputRoot, { recursive: true })
+  await Promise.all(generatedDirectories.map((directory) => rm(join(outputRoot, directory), { recursive: true, force: true })))
 
   await writePng(join(outputRoot, 'source/app-icon-1024.png'), 1024)
 
