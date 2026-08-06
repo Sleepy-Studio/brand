@@ -1,64 +1,45 @@
 {
-  "name": "@sleepy-studio/branding",
+  "name": "@sleepy-studio/brand",
   "version": "1.0.0",
-  "description": "Sleepy Studio brand assets SDK - fetch, manage, and integrate logos and assets",
+  "description": "Canonical Sleepy Studio assets, manifests, and semantic design tokens.",
   "type": "module",
-  "main": "./dist/index.js",
-  "module": "./dist/index.js",
-  "types": "./dist/index.d.ts",
-  "exports": {
-    ".": {
-      "import": "./dist/index.js",
-      "types": "./dist/index.d.ts"
-    },
-    "./react": {
-      "import": "./dist/react.js",
-      "types": "./dist/react.d.ts"
-    },
-    "./vue": {
-      "import": "./dist/vue.js",
-      "types": "./dist/vue.d.ts"
-    }
-  },
   "files": [
-    "dist",
-    "README.md"
+    "assets.json",
+    "tokens",
+    "logos",
+    "characters",
+    "3d-models",
+    "favicon.ico",
+    "README.md",
+    "INTEGRATION.md"
   ],
+  "exports": {
+    "./assets": "./assets.json",
+    "./tokens": "./tokens/tokens.json",
+    "./tokens.css": "./tokens/tokens.css"
+  },
   "scripts": {
-    "build": "tsc && esbuild dist/index.js --bundle --outfile=dist/index.min.js --minify",
-    "dev": "tsc --watch",
-    "test": "vitest run",
-    "prepublishOnly": "npm run build"
+    "validate": "node scripts/validate.mjs"
   },
   "keywords": [
-    "branding",
+    "brand",
+    "design-tokens",
     "assets",
     "logos",
-    "cdn",
     "sleepy-studio"
   ],
   "author": "Sleepy Studio",
-  "license": "MIT",
+  "license": "UNLICENSED",
   "repository": {
     "type": "git",
-    "url": "https://github.com/Sleepy-Studio/branding.git"
+    "url": "https://github.com/Sleepy-Studio/brand.git"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://npm.pkg.github.com/"
   },
   "devDependencies": {
-    "typescript": "^5.3.0",
-    "esbuild": "^0.19.0",
-    "vitest": "^1.0.0",
-    "@types/node": "^20.0.0"
+    "@sleepy-studio/contracts": "^0.1.0"
   },
-  "peerDependencies": {
-    "react": "^18.0.0 || ^19.0.0",
-    "vue": "^3.0.0"
-  },
-  "peerDependenciesMeta": {
-    "react": {
-      "optional": true
-    },
-    "vue": {
-      "optional": true
-    }
-  }
+  "private": false
 }
