@@ -1,132 +1,118 @@
 {
+  "$schema": "https://raw.githubusercontent.com/Sleepy-Studio/contracts/main/schemas/asset-manifest.schema.json",
   "version": "1.0.0",
+  "ref": "main",
   "repository": "https://github.com/Sleepy-Studio/brand",
-  "description": "Sleepy Studio brand assets - single source of truth for organization logos, icons, and visual assets",
+  "description": "Sleepy Studio brand assets development manifest. Production consumers should use a release-tagged manifest.",
   "assets": [
     {
       "id": "logo-black",
       "name": "Logo Black",
       "description": "Black variant of the Sleepy Studio logo",
       "added": "2026-08-02",
-      "variants": [
-        {
-          "format": "svg",
-          "file": "logos/svg/LogoBlack.svg",
-          "size_kb": 10.06,
-          "url": "https://raw.githubusercontent.com/Sleepy-Studio/brand/main/logos/svg/LogoBlack.svg",
-          "mime": "image/svg+xml"
-        }
-      ]
+      "variants": [{
+        "format": "svg",
+        "file": "logos/svg/LogoBlack.svg",
+        "size_kb": 10.06,
+        "url": "https://raw.githubusercontent.com/Sleepy-Studio/brand/main/logos/svg/LogoBlack.svg",
+        "mime": "image/svg+xml"
+      }]
     },
     {
       "id": "logo-black-red",
       "name": "Logo Black with Red Accent",
       "description": "Black Sleepy Studio logo with a red accent",
       "added": "2026-08-02",
-      "variants": [
-        {
-          "format": "svg",
-          "file": "logos/svg/LogoBlackRed.svg",
-          "size_kb": 9.93,
-          "url": "https://raw.githubusercontent.com/Sleepy-Studio/brand/main/logos/svg/LogoBlackRed.svg",
-          "mime": "image/svg+xml"
-        }
-      ]
+      "variants": [{
+        "format": "svg",
+        "file": "logos/svg/LogoBlackRed.svg",
+        "size_kb": 9.93,
+        "url": "https://raw.githubusercontent.com/Sleepy-Studio/brand/main/logos/svg/LogoBlackRed.svg",
+        "mime": "image/svg+xml"
+      }]
     },
     {
       "id": "logo-white",
       "name": "Logo White",
       "description": "White variant of the Sleepy Studio logo",
       "added": "2026-08-02",
-      "variants": [
-        {
-          "format": "svg",
-          "file": "logos/svg/LogoWhite.svg",
-          "size_kb": 10.34,
-          "url": "https://raw.githubusercontent.com/Sleepy-Studio/brand/main/logos/svg/LogoWhite.svg",
-          "mime": "image/svg+xml"
-        }
-      ]
+      "variants": [{
+        "format": "svg",
+        "file": "logos/svg/LogoWhite.svg",
+        "size_kb": 10.34,
+        "url": "https://raw.githubusercontent.com/Sleepy-Studio/brand/main/logos/svg/LogoWhite.svg",
+        "mime": "image/svg+xml"
+      }]
     },
     {
       "id": "logo-white-red",
       "name": "Logo White with Red Accent",
       "description": "White Sleepy Studio logo with a red accent",
       "added": "2026-08-02",
-      "variants": [
-        {
-          "format": "svg",
-          "file": "logos/svg/LogoWhiteRed.svg",
-          "size_kb": 10.07,
-          "url": "https://raw.githubusercontent.com/Sleepy-Studio/brand/main/logos/svg/LogoWhiteRed.svg",
-          "mime": "image/svg+xml"
-        }
-      ]
+      "variants": [{
+        "format": "svg",
+        "file": "logos/svg/LogoWhiteRed.svg",
+        "size_kb": 10.07,
+        "url": "https://raw.githubusercontent.com/Sleepy-Studio/brand/main/logos/svg/LogoWhiteRed.svg",
+        "mime": "image/svg+xml"
+      }]
     },
     {
       "id": "sleepy-black",
       "name": "Sleepy Logo - Black PNG",
       "description": "Black raster variant of the Sleepy Studio logo",
       "added": "2026-08-02",
-      "variants": [
-        {
-          "format": "png",
-          "file": "logos/png/sleepyblack.png",
-          "size_kb": 15.62,
-          "url": "https://raw.githubusercontent.com/Sleepy-Studio/brand/main/logos/png/sleepyblack.png",
-          "mime": "image/png"
-        }
-      ]
+      "variants": [{
+        "format": "png",
+        "file": "logos/png/sleepyblack.png",
+        "size_kb": 15.62,
+        "url": "https://raw.githubusercontent.com/Sleepy-Studio/brand/main/logos/png/sleepyblack.png",
+        "mime": "image/png"
+      }]
     },
     {
       "id": "sleepy-yellow",
       "name": "Sleepy Logo - Yellow PNG",
       "description": "Yellow raster variant of the Sleepy Studio logo",
       "added": "2026-08-02",
-      "variants": [
-        {
-          "format": "png",
-          "file": "logos/png/sleepyyellow.png",
-          "size_kb": 52.57,
-          "url": "https://raw.githubusercontent.com/Sleepy-Studio/brand/main/logos/png/sleepyyellow.png",
-          "mime": "image/png"
-        }
-      ]
+      "variants": [{
+        "format": "png",
+        "file": "logos/png/sleepyyellow.png",
+        "size_kb": 52.57,
+        "url": "https://raw.githubusercontent.com/Sleepy-Studio/brand/main/logos/png/sleepyyellow.png",
+        "mime": "image/png"
+      }]
     },
     {
       "id": "logo-3d",
       "name": "Sleepy Logo - 3D Model",
       "description": "3D model of the Sleepy Studio logo in GLTF binary format",
       "added": "2026-08-02",
-      "variants": [
-        {
-          "format": "glb",
-          "file": "logos/glb/SleepyLogo3d.glb",
-          "size_kb": 819.83,
-          "url": "https://raw.githubusercontent.com/Sleepy-Studio/brand/main/logos/glb/SleepyLogo3d.glb",
-          "mime": "model/gltf-binary"
-        }
-      ]
+      "variants": [{
+        "format": "glb",
+        "file": "logos/glb/SleepyLogo3d.glb",
+        "size_kb": 819.83,
+        "url": "https://raw.githubusercontent.com/Sleepy-Studio/brand/main/logos/glb/SleepyLogo3d.glb",
+        "mime": "model/gltf-binary"
+      }]
     },
     {
       "id": "favicon",
       "name": "Favicon",
       "description": "Sleepy Studio favicon (16/24/32/64px), canonical tab and browser icon",
       "added": "2026-08-04",
-      "variants": [
-        {
-          "format": "ico",
-          "file": "favicon.ico",
-          "size_kb": 3.78,
-          "url": "https://raw.githubusercontent.com/Sleepy-Studio/brand/main/favicon.ico",
-          "mime": "image/x-icon"
-        }
-      ]
+      "variants": [{
+        "format": "ico",
+        "file": "favicon.ico",
+        "size_kb": 3.78,
+        "url": "https://raw.githubusercontent.com/Sleepy-Studio/brand/main/favicon.ico",
+        "mime": "image/x-icon"
+      }]
     }
   ],
   "usage": {
-    "fetch_single_asset": "GET https://raw.githubusercontent.com/Sleepy-Studio/brand/main/{path_to_file}",
-    "fetch_manifest": "GET https://raw.githubusercontent.com/Sleepy-Studio/brand/main/assets.json",
-    "documentation": "See README.md for quick start and INTEGRATION.md for detailed guides"
+    "development_manifest": "GET https://raw.githubusercontent.com/Sleepy-Studio/brand/main/assets.json",
+    "release_manifest": "GET https://raw.githubusercontent.com/Sleepy-Studio/brand/{release-tag}/assets.json",
+    "documentation": "See README.md and INTEGRATION.md"
   }
 }
