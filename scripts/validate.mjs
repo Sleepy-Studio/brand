@@ -1,8 +1,10 @@
 import { access, readFile } from 'node:fs/promises'
+import { fileURLToPath } from 'node:url'
 import sharp from 'sharp'
 import { validateAssetManifest, validateDesignTokens } from '@sleepy-studio/contracts'
 
 const readJson = async (path) => JSON.parse(await readFile(new URL(`../${path}`, import.meta.url), 'utf8'))
+const resolvePath = (path) => fileURLToPath(new URL(`../${path}`, import.meta.url))
 
 const checks = [
   ['assets.json', validateAssetManifest],
@@ -52,14 +54,14 @@ for (const [path, validate] of checks) {
 
 for (const [path, expectedSize] of requiredIcons) {
   try {
-    const metadata = await sharp(new URL(`../${path}`, import.meta.url)).metadata()
+    const metadata = await sharp(resolvePath(path)).metadata()
     if (metadata.width !== expectedSize || metadata.height !== expectedSize) {
       failed = true
       console.error(`invalid: ${path} expected ${expectedSize}x${expectedSize}, received ${metadata.width}x${metadata.height}`)
     } else {
       console.log(`valid: ${path}`)
     }
-  } catch (error) {
+  } catch {
     failed = true
     console.error(`missing or unreadable: ${path}`)
   }
@@ -67,7 +69,7 @@ for (const [path, expectedSize] of requiredIcons) {
 
 for (const path of requiredBinaryIcons) {
   try {
-    await access(new URL(`../${path}`, import.meta.url))
+    await access(resolvePath(path))
     console.log(`valid: ${path}`)
   } catch {
     failed = true
