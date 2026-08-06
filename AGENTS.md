@@ -12,8 +12,14 @@ Every Brand change must keep source assets, manifests, token exports, documentat
 4. Validate manifests and token documents against `@sleepy-studio/contracts`.
 5. Treat `main` as a development channel. Production consumers must use immutable release tags.
 6. Before a release, replace manifest `ref: "main"` and all mutable asset URLs with the release tag.
-7. Pin the Contracts validation dependency to a verified commit. Keep the exact matching git locator in `pnpm-workspace.yaml` under `allowBuilds`.
+7. Pin the Contracts validation dependency to a verified revision. Approve its repository-level git locator in the root `pnpm-workspace.yaml`; never use a commit-specific `#<sha>` approval.
 8. Update README and integration guidance when public asset paths, exports, tokens, or release procedures change.
+
+## pnpm build approvals
+
+Follow the organization standard in [`Sleepy-Studio/.github/docs/pnpm-build-approvals.md`](https://github.com/Sleepy-Studio/.github/blob/main/docs/pnpm-build-approvals.md).
+
+Git-hosted Sleepy Studio packages that require install-time scripts must be approved by repository URL in the root `pnpm-workspace.yaml`. Do not use `dangerouslyAllowAllBuilds`, and do not require users to repeat manual approval workarounds after dependency revisions change.
 
 ## Repository boundaries
 
