@@ -3,3 +3,4 @@ packages:
 
 allowBuilds:
   '@sleepy-studio/contracts@git+https://github.com/Sleepy-Studio/contracts.git#cf767d7a91325a436040a88b771bc99f26928a37': true
+  sharp: true
