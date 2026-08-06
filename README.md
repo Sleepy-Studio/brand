@@ -10,21 +10,11 @@ Pin an immutable Brand release:
 <img src="https://raw.githubusercontent.com/Sleepy-Studio/brand/v1.0.0/logos/svg/LogoBlack.svg" alt="Sleepy Studio" />
 ```
 
-```bash
-curl https://raw.githubusercontent.com/Sleepy-Studio/brand/v1.0.0/assets.json
-```
-
 `main` is the development channel. Production applications should record and consume an immutable release tag.
 
 ## Semantic tokens
 
-JSON tokens:
-
-```text
-tokens/tokens.json
-```
-
-CSS variables:
+JSON tokens are published from `tokens/tokens.json`. CSS variables are published from `tokens/tokens.css`.
 
 ```css
 @import url('https://raw.githubusercontent.com/Sleepy-Studio/brand/v1.0.0/tokens/tokens.css');
@@ -38,14 +28,19 @@ CSS variables:
 
 Components may expose component-specific variables, but their defaults should resolve through these semantic Brand variables.
 
-## Contracts
+## Contracts and validation
 
 `assets.json` and `tokens/tokens.json` conform to schemas owned by [`Sleepy-Studio/contracts`](https://github.com/Sleepy-Studio/contracts).
 
 ```bash
+cd ~/Sleepy-Studio/brand
+
+rm -rf node_modules
 pnpm install
 pnpm validate
 ```
+
+Validation checks the asset manifest and semantic-token document. The Contracts dependency is pinned to a verified commit. When that pin changes, update the exact matching git locator under `allowBuilds` in `pnpm-workspace.yaml`, reinstall, and validate again.
 
 The development asset manifest declares `ref: "main"`. Release preparation must rewrite `ref` and every asset URL to the immutable release tag before publishing.
 
@@ -79,8 +74,7 @@ Not every area is implemented yet, but Brand is the canonical owner as those sys
 ## Documentation
 
 - [INTEGRATION.md](INTEGRATION.md)
-- [CONTRIBUTING.md](CONTRIBUTING.md)
-- [CHANGELOG.md](CHANGELOG.md)
+- [AGENTS.md](AGENTS.md)
 - [assets.json](assets.json)
 - [tokens/tokens.json](tokens/tokens.json)
 - [tokens/tokens.css](tokens/tokens.css)
