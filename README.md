@@ -1,6 +1,6 @@
 # Sleepy Studio Brand
 
-Canonical source of truth for Sleepy Studio identity, assets, visual language, voice, motion, sound, naming, manifests, and semantic design tokens.
+Canonical source of truth for Sleepy Studio identity, assets, visual language, voice, motion, sound, naming, manifests, semantic design tokens, and application icons.
 
 ## Production consumption
 
@@ -11,6 +11,20 @@ Pin an immutable Brand release:
 ```
 
 `main` is the development channel. Production applications should record and consume an immutable release tag.
+
+## Canonical app icons
+
+All Sleepy Studio browser, PWA, Windows, macOS, Linux, taskbar, launcher, installer, and shortcut icons come from `app-icons/`.
+
+The canonical treatment is the yellow Sleepy Studio logo on a dark rounded tile. Framework defaults such as React, Vite, Tauri, and Electron icons are not permitted in ecosystem applications.
+
+```bash
+pnpm install
+pnpm icons:generate
+pnpm validate
+```
+
+See [`app-icons/README.md`](app-icons/README.md) for the platform mapping.
 
 ## Semantic tokens
 
@@ -37,10 +51,11 @@ cd ~/Sleepy-Studio/brand
 
 rm -rf node_modules
 pnpm install
+pnpm icons:generate
 pnpm validate
 ```
 
-Validation checks the asset manifest and semantic-token document. The Contracts dependency is pinned to a verified commit. When that pin changes, update the exact matching git locator under `allowBuilds` in `pnpm-workspace.yaml`, reinstall, and validate again.
+Validation checks the asset manifest, semantic-token document, and required app icon outputs. The Contracts dependency is pinned to a verified commit. When that pin changes, update the exact matching git locator under `allowBuilds` in `pnpm-workspace.yaml`, reinstall, and validate again.
 
 The development asset manifest declares `ref: "main"`. Release preparation must rewrite `ref` and every asset URL to the immutable release tag before publishing.
 
@@ -50,6 +65,7 @@ The development asset manifest declares `ref: "main"`. Release preparation must 
 logos/
 characters/
 3d-models/
+app-icons/
 tokens/
 icons/
 illustration/
@@ -74,6 +90,7 @@ Not every area is implemented yet, but Brand is the canonical owner as those sys
 ## Documentation
 
 - [INTEGRATION.md](INTEGRATION.md)
+- [app-icons/README.md](app-icons/README.md)
 - [AGENTS.md](AGENTS.md)
 - [assets.json](assets.json)
 - [tokens/tokens.json](tokens/tokens.json)
