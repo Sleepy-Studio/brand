@@ -96,6 +96,9 @@ Applications may override component variables without redefining canonical Brand
 ## Validation
 
 ```bash
+cd ~/Sleepy-Studio/brand
+
+rm -rf node_modules
 pnpm install
 pnpm validate
 ```
@@ -104,6 +107,8 @@ Validation checks:
 
 - `assets.json` against the shared asset-manifest contract
 - `tokens/tokens.json` against the shared design-token contract
+
+Brand pins Contracts validation to a verified commit. When updating that pin, update the exact matching git locator under `allowBuilds` in `pnpm-workspace.yaml`, remove stale install state, reinstall, and validate.
 
 ## Release rule
 
