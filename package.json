@@ -39,7 +39,7 @@
     "registry": "https://npm.pkg.github.com/"
   },
   "devDependencies": {
-    "@sleepy-studio/contracts": "^0.1.0"
+    "@sleepy-studio/contracts": "github:Sleepy-Studio/contracts#main"
   },
   "private": false
 }
