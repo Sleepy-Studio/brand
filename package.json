@@ -1,6 +1,6 @@
 {
   "name": "@sleepy-studio/brand",
-  "version": "1.1.2",
+  "version": "1.2.0",
   "description": "Canonical Sleepy Studio assets, manifests, and semantic design tokens.",
   "type": "module",
   "files": [
@@ -9,6 +9,7 @@
     "logos",
     "characters",
     "3d-models",
+    "app-icons",
     "favicon.ico",
     "README.md",
     "INTEGRATION.md"
@@ -16,9 +17,19 @@
   "exports": {
     "./assets": "./assets.json",
     "./tokens": "./tokens/tokens.json",
-    "./tokens.css": "./tokens/tokens.css"
+    "./tokens.css": "./tokens/tokens.css",
+    "./app-icons/favicon.ico": "./app-icons/favicon/favicon.ico",
+    "./app-icons/favicon-32.png": "./app-icons/favicon/favicon-32.png",
+    "./app-icons/pwa-192.png": "./app-icons/pwa/icon-192.png",
+    "./app-icons/pwa-512.png": "./app-icons/pwa/icon-512.png",
+    "./app-icons/pwa-maskable-192.png": "./app-icons/pwa/icon-maskable-192.png",
+    "./app-icons/pwa-maskable-512.png": "./app-icons/pwa/icon-maskable-512.png",
+    "./app-icons/apple-touch.png": "./app-icons/apple/apple-touch-icon.png",
+    "./app-icons/windows.ico": "./app-icons/windows/sleepy-studio.ico",
+    "./app-icons/macos.icns": "./app-icons/macos/sleepy-studio.icns"
   },
   "scripts": {
+    "icons:generate": "node scripts/generate-app-icons.mjs",
     "validate": "node scripts/validate.mjs"
   },
   "keywords": [
@@ -39,7 +50,8 @@
     "registry": "https://npm.pkg.github.com/"
   },
   "devDependencies": {
-    "@sleepy-studio/contracts": "github:Sleepy-Studio/contracts#cf767d7a91325a436040a88b771bc99f26928a37"
+    "@sleepy-studio/contracts": "github:Sleepy-Studio/contracts#cf767d7a91325a436040a88b771bc99f26928a37",
+    "sharp": "^0.34.3"
   },
   "private": false
 }
