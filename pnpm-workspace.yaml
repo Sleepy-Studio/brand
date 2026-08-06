@@ -2,4 +2,4 @@ packages:
   - .
 
 allowBuilds:
-  '@sleepy-studio/contracts@git+https://github.com/Sleepy-Studio/contracts.git#e82196f823abb11a9937351111e039c014c562bc': true
+  '@sleepy-studio/contracts@git+https://github.com/Sleepy-Studio/contracts.git#cf767d7a91325a436040a88b771bc99f26928a37': true
