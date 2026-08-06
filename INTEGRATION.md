@@ -1,501 +1,127 @@
-# Integration & Implementation Guide
+# Brand integration
 
-How to use, embed, and integrate Sleepy Studio brand assets into your apps, websites, and platforms.
+Use `Sleepy-Studio/brand` as the canonical source for Sleepy Studio assets and semantic visual tokens.
 
-## Table of Contents
+## Choose a release
 
-1. [Quick Integration](#quick-integration)
-2. [Fetch Methods](#fetch-methods)
-3. [Embedding & Display](#embedding--display)
-4. [Platform-Specific Guides](#platform-specific-guides)
-5. [SDK & Libraries](#sdk--libraries)
-6. [Advanced Interoperability](#advanced-interoperability)
-7. [Performance & Caching](#performance--caching)
+Production consumers must pin an immutable tag:
 
----
-
-## Quick Integration
-
-### HTML/Web
-
-```html
-<!-- Logo -->
-<img src="https://raw.githubusercontent.com/Sleepy-Studio/branding/main/logos/svg/LogoBlack.svg" 
-     alt="Sleepy Studio" class="logo" />
-
-<!-- Optimized (with cache headers) -->
-<link rel="preload" as="image" href="https://raw.githubusercontent.com/Sleepy-Studio/branding/main/logos/svg/LogoBlack.svg" />
-
-<!-- Responsive with srcset -->
-<img srcset="https://raw.githubusercontent.com/Sleepy-Studio/branding/main/characters/png/sleepyyellow.png 1x,
-             https://raw.githubusercontent.com/Sleepy-Studio/branding/main/characters/png/sleepyyellow.png 2x"
-     src="https://raw.githubusercontent.com/Sleepy-Studio/branding/main/characters/png/sleepyyellow.png"
-     alt="Sleepy Character" />
+```ts
+const BRAND_REF = 'v1.0.0'
+const BRAND_BASE = `https://raw.githubusercontent.com/Sleepy-Studio/brand/${BRAND_REF}`
 ```
 
-### React/Vue/Svelte
+Use `main` only for local development or deliberate preview environments.
 
-```typescript
-// React Hook
-import { useState, useEffect } from 'react'
+## Asset manifest
 
-const useAsset = (assetId: string, format?: string) => {
-  const [url, setUrl] = useState<string | null>(null)
-  const [loading, setLoading] = useState(true)
-  const [error, setError] = useState<string | null>(null)
-
-  useEffect(() => {
-    const fetchAsset = async () => {
-      try {
-        const manifest = await fetch(
-          'https://raw.githubusercontent.com/Sleepy-Studio/branding/main/assets.json'
-        ).then(r => r.json())
-        
-        const asset = manifest.assets.find((a: any) => a.id === assetId)
-        if (!asset) throw new Error(`Asset ${assetId} not found`)
-        
-        const variant = format 
-          ? asset.variants.find((v: any) => v.format === format)
-          : asset.variants[0]
-        
-        setUrl(variant?.url || null)
-      } catch (err) {
-        setError(err instanceof Error ? err.message : 'Unknown error')
-      } finally {
-        setLoading(false)
-      }
-    }
-
-    fetchAsset()
-  }, [assetId, format])
-
-  return { url, loading, error }
-}
-
-// Usage
-export function Logo() {
-  const { url, loading } = useAsset('logo-black', 'svg')
-  return loading ? <div>Loading...</div> : <img src={url || ''} />
-}
-```
-
----
-
-## Fetch Methods
-
-### 1. Direct CDN URLs
-
-**Pros**: Simple, no dependencies, works everywhere  
-**Cons**: No caching, no fallback
-
-```html
-<img src="https://raw.githubusercontent.com/Sleepy-Studio/branding/main/logos/svg/LogoBlack.svg" />
-```
-
-### 2. Fetch Asset Manifest
-
-**Pros**: Get metadata, URLs, formats, sizes  
-**Cons**: Extra API call
-
-```bash
-curl https://raw.githubusercontent.com/Sleepy-Studio/branding/main/assets.json
-```
-
-**Response**:
-```json
-{
-  "assets": [{
-    "id": "logo-black",
-    "name": "Logo Black",
-    "variants": [{
-      "format": "svg",
-      "url": "https://raw.githubusercontent.com/Sleepy-Studio/branding/main/logos/svg/LogoBlack.svg",
-      "size_kb": 10.06
-    }]
-  }]
-}
-```
-
-### 3. Asset Service (Recommended)
-
-Create a local service to manage URLs and caching:
-
-```typescript
-// services/branding.ts
-const MANIFEST_URL = 'https://raw.githubusercontent.com/Sleepy-Studio/branding/main/assets.json'
-const CACHE_TTL = 3600 * 1000  // 1 hour
-
-let manifestCache: any = null
-let cacheTime = 0
-
-export async function getAssetManifest() {
-  if (manifestCache && Date.now() - cacheTime < CACHE_TTL) {
-    return manifestCache
-  }
-
-  const response = await fetch(MANIFEST_URL)
-  manifestCache = await response.json()
-  cacheTime = Date.now()
-  return manifestCache
-}
-
-export async function getAssetUrl(
-  assetId: string,
-  format?: string
-): Promise<string | null> {
-  const manifest = await getAssetManifest()
-  const asset = manifest.assets.find((a: any) => a.id === assetId)
-  
-  if (!asset) {
-    console.warn(`Asset ${assetId} not found`)
-    return null
-  }
-
-  const variant = format
-    ? asset.variants.find((v: any) => v.format === format)
-    : asset.variants[0]
-
-  return variant?.url || null
-}
-
-export async function getAsset(assetId: string, format?: string) {
-  const url = await getAssetUrl(assetId, format)
-  if (!url) return null
-  
-  const response = await fetch(url)
-  return {
-    url,
-    format: format || 'auto',
-    contentType: response.headers.get('content-type'),
-    size: response.headers.get('content-length'),
-    data: await response.blob()
-  }
-}
-```
-
----
-
-## Embedding & Display
-
-### SVG Logos
-
-```html
-<!-- Inline SVG -->
-<svg viewBox="0 0 100 100" width="50" height="50">
-  <use xlink:href="https://raw.githubusercontent.com/Sleepy-Studio/branding/main/logos/svg/LogoBlack.svg#logo" />
-</svg>
-
-<!-- Favicon -->
-<link rel="icon" href="https://raw.githubusercontent.com/Sleepy-Studio/branding/main/logos/svg/LogoBlack.svg" />
-```
-
-### PNG & Raster
-
-```html
-<!-- Picture element for formats -->
-<picture>
-  <source srcset="https://.../sleepyyellow.webp" type="image/webp" />
-  <source srcset="https://.../sleepyyellow.png" type="image/png" />
-  <img src="https://.../sleepyyellow.png" alt="Sleepy" />
-</picture>
-```
-
-### 3D Models
-
-```html
-<!-- Three.js -->
-<script type="importmap">
-  { "imports": { "three": "https://cdn.jsdelivr.net/npm/three@r128/build/three.module.js" } }
-</script>
-<script type="module">
-  import * as THREE from 'three'
-  import { GLTFLoader } from 'https://cdn.jsdelivr.net/npm/three/examples/jsm/loaders/GLTFLoader.js'
-
-  const loader = new GLTFLoader()
-  loader.load('https://raw.githubusercontent.com/Sleepy-Studio/branding/main/3d-models/glb/SleepyLogo3d.glb', (gltf) => {
-    const model = gltf.scene
-    // ... add to scene
-  })
-</script>
-
-<!-- Model Viewer -->
-<model-viewer 
-  src="https://raw.githubusercontent.com/Sleepy-Studio/branding/main/3d-models/glb/SleepyLogo3d.glb"
-  auto-rotate
-  camera-controls
-  style="width: 400px; height: 400px">
-</model-viewer>
-```
-
----
-
-## Platform-Specific Guides
-
-### Next.js / React
-
-```typescript
-// next/image (optimized image component)
-import Image from 'next/image'
-
-export function Logo() {
-  return (
-    <Image
-      src="https://raw.githubusercontent.com/Sleepy-Studio/branding/main/logos/svg/LogoBlack.svg"
-      alt="Logo"
-      width={50}
-      height={50}
-      priority
-    />
-  )
-}
-```
-
-### Vue.js
-
-```vue
-<template>
-  <img 
-    :src="logoUrl"
-    :alt="logoName"
-    class="logo"
-  />
-</template>
-
-<script setup lang="ts">
-import { ref, onMounted } from 'vue'
-
-const logoUrl = ref('')
-const logoName = ref('Logo Black')
-
-onMounted(async () => {
-  const manifest = await fetch(
-    'https://raw.githubusercontent.com/Sleepy-Studio/branding/main/assets.json'
-  ).then(r => r.json())
-  
-  const logo = manifest.assets.find((a: any) => a.id === 'logo-black')
-  logoUrl.value = logo?.variants[0]?.url || ''
+```ts
+const manifest = await fetch(`${BRAND_BASE}/assets.json`).then((response) => {
+  if (!response.ok) throw new Error(`Brand manifest request failed: ${response.status}`)
+  return response.json()
 })
-</script>
+
+const asset = manifest.assets.find((item: { id: string }) => item.id === 'sleepy-yellow')
+const url = asset?.variants[0]?.url
 ```
 
-### Svelte
+The manifest is validated against the asset-manifest schema from `Sleepy-Studio/contracts`.
 
-```svelte
-<script>
-  let logoUrl = ''
+## Direct asset usage
 
-  onMount(async () => {
-    const manifest = await fetch(
-      'https://raw.githubusercontent.com/Sleepy-Studio/branding/main/assets.json'
-    ).then(r => r.json())
-    
-    const logo = manifest.assets.find(a => a.id === 'logo-black')
-    logoUrl = logo?.variants[0]?.url || ''
-  })
-</script>
-
-<img src={logoUrl} alt="Logo" />
+```html
+<img
+  src="https://raw.githubusercontent.com/Sleepy-Studio/brand/v1.0.0/logos/svg/LogoBlack.svg"
+  alt="Sleepy Studio"
+/>
 ```
 
-### Tailwind CSS
+```html
+<link
+  rel="icon"
+  href="https://raw.githubusercontent.com/Sleepy-Studio/brand/v1.0.0/favicon.ico"
+/>
+```
+
+## Semantic tokens
+
+Use the canonical CSS token export before component styles:
 
 ```css
-/* Use as background image */
-@layer components {
-  .logo-bg {
-    @apply bg-center bg-no-repeat bg-contain;
-    background-image: url('https://raw.githubusercontent.com/Sleepy-Studio/branding/main/logos/svg/LogoBlack.svg');
-  }
+@import url('https://raw.githubusercontent.com/Sleepy-Studio/brand/v1.0.0/tokens/tokens.css');
+@import url('./application.css');
+```
+
+```css
+.application-card {
+  color: var(--sleepy-color-text-primary);
+  background: var(--sleepy-color-bg-surface);
+  border: 1px solid var(--sleepy-color-border-default);
+  border-radius: var(--sleepy-radius-lg);
+  box-shadow: var(--sleepy-shadow-surface);
+  transition: border-color var(--sleepy-motion-standard) ease;
 }
 ```
 
-### WordPress
+Machine-readable tokens are available from `tokens/tokens.json` and validate against the design-token schema in `Sleepy-Studio/contracts`.
 
-```php
-<?php
-function get_sleepy_logo($asset_id = 'logo-black', $format = 'svg') {
-  $manifest_url = 'https://raw.githubusercontent.com/Sleepy-Studio/branding/main/assets.json';
-  $manifest = wp_remote_retrieve_body(wp_remote_get($manifest_url));
-  $manifest = json_decode($manifest, true);
-  
-  foreach ($manifest['assets'] as $asset) {
-    if ($asset['id'] === $asset_id) {
-      foreach ($asset['variants'] as $variant) {
-        if ($variant['format'] === $format) {
-          return $variant['url'];
-        }
-      }
-    }
-  }
-  return false;
-}
-?>
+## Package consumption
 
-<!-- Usage -->
-<img src="<?php echo esc_url(get_sleepy_logo()); ?>" alt="Sleepy Studio" />
+When the Brand package is installed from GitHub Packages:
+
+```css
+@import '@sleepy-studio/brand/tokens.css';
 ```
 
----
-
-## SDK & Libraries
-
-### Planned SDKs (v2.0+)
-
-```typescript
-// @sleepy-studio/branding (npm package)
-import { BrandingClient } from '@sleepy-studio/branding'
-
-const branding = new BrandingClient()
-
-// Fetch asset
-const logo = await branding.asset('logo-black', { format: 'svg' })
-console.log(logo.url)
-
-// List all assets
-const assets = await branding.listAssets()
-
-// Generate embed code
-const embedCode = await branding.embed('logo-black', { 
-  format: 'html',
-  style: 'responsive'
-})
+```ts
+import manifest from '@sleepy-studio/brand/assets' with { type: 'json' }
+import tokens from '@sleepy-studio/brand/tokens' with { type: 'json' }
 ```
 
-### MCP Server
+## Component integration
 
-```typescript
-// Cloudflare Worker MCP Server
-// Access via Claude, Copilot, or other AI tools
-export const brandingServer = {
-  tools: {
-    'get-asset': async (args) => {
-      const url = await getAssetUrl(args.assetId, args.format)
-      return { url, markdown: `![Asset](${url})` }
-    },
-    'list-assets': async () => {
-      const manifest = await getAssetManifest()
-      return manifest.assets
-    }
-  }
+`Sleepy-Studio/components` owns reusable rendering and interaction. Component-specific variables should use Brand semantic variables as their defaults:
+
+```css
+.s-action-button {
+  --s-action-button-color: var(--sleepy-color-text-primary);
+  --s-action-button-bg: var(--sleepy-glass-background);
+  --s-action-button-radius: var(--sleepy-radius-lg);
+  --s-action-button-duration: var(--sleepy-motion-standard);
 }
 ```
 
----
+Applications may override component variables without redefining canonical Brand values.
 
-## Advanced Interoperability
-
-### Webhook-Based Updates
-
-When assets are updated, trigger webhooks to notify dependent repos:
+## Validation
 
 ```bash
-# Webhook payload
-{
-  "event": "asset_updated",
-  "asset_id": "logo-black",
-  "old_variant": { "format": "svg", "url": "...", "size_kb": 10.06 },
-  "new_variant": { "format": "svg", "url": "...", "size_kb": 10.50 },
-  "timestamp": "2026-08-02T12:00:00Z",
-  "migration_url": "https://github.com/Sleepy-Studio/branding/blob/main/MIGRATIONS.md#logo-black-v1-1"
-}
+pnpm install
+pnpm validate
 ```
 
-### Versioning Strategy
+Validation checks:
 
-```
-/logos/svg/LogoBlack.svg         # Latest (v1.x)
-/logos/svg/LogoBlack-v1.0.svg    # Pinned version
-/logos/svg/LogoBlack-v2.0.svg    # Breaking change
-```
+- `assets.json` against the shared asset-manifest contract
+- `tokens/tokens.json` against the shared design-token contract
 
-### Git Submodule Integration
+## Release rule
 
-```bash
-# Include branding repo as submodule
-git submodule add https://github.com/Sleepy-Studio/branding.git assets/branding
+Before creating a Brand release tag:
 
-# Use locally
-<img src="./assets/branding/logos/svg/LogoBlack.svg" />
-```
+1. Set the manifest `ref` to the release tag.
+2. Rewrite every manifest asset URL to that tag.
+3. Run validation.
+4. Confirm all referenced files exist at that commit.
+5. Tag the validated commit.
 
-### Docker / Container Integration
+A manifest whose `ref` is `main` is a development manifest and must not be treated as immutable.
 
-```dockerfile
-FROM node:22-alpine
+## Repository ownership
 
-# Copy branding assets during build
-COPY --from=branding:latest /assets /public/branding
+- Brand: canonical assets, semantic tokens, motion, sound, voice, and visual language.
+- Contracts: schemas, types, validators, and compatibility rules.
+- Components: reusable visual implementation and interaction.
+- Applications: product composition, data fetching, routing, and orchestration.
 
-# Serve at build time or runtime
-COPY ./fetch-branding.sh ./
-RUN ./fetch-branding.sh
-```
-
----
-
-## Performance & Caching
-
-### Cache Strategy
-
-1. **Browser Cache**: GitHub serves with 1-year cache headers
-2. **Service Worker**: Cache in app for offline use
-3. **CDN**: Optional (Cloudflare, Vercel, etc.)
-
-```typescript
-// Service Worker cache
-self.addEventListener('install', (event) => {
-  event.waitUntil(
-    caches.open('branding-v1').then((cache) => {
-      return cache.addAll([
-        'https://raw.githubusercontent.com/Sleepy-Studio/branding/main/logos/svg/LogoBlack.svg',
-        'https://raw.githubusercontent.com/Sleepy-Studio/branding/main/assets.json'
-      ])
-    })
-  )
-})
-```
-
-### Optimization Tips
-
-- ✅ Preload critical assets
-- ✅ Use WebP/AVIF when available
-- ✅ Cache manifest locally (1 hour TTL)
-- ✅ Lazy load non-critical assets
-- ✅ Use CDN for high-traffic sites
-
----
-
-## Troubleshooting
-
-### Asset Not Loading
-
-1. **Verify URL** — Copy URL directly into browser
-2. **Check CORS** — GitHub allows CORS from all origins
-3. **Inspect headers** — Look for Cache-Control, ETag
-4. **Test fallback** — Use png if svg fails
-
-### Manifest Not Found
-
-- Verify URL: `https://raw.githubusercontent.com/Sleepy-Studio/branding/main/assets.json`
-- Check branch: Must be `main` (not `develop` or custom branch)
-- Check repo access: Branding repo must be public
-
-### Performance Issues
-
-- Cache manifest (1 hour TTL)
-- Preload critical assets
-- Use service workers for offline
-- Consider local mirror for high-volume use
-
----
-
-## Support
-
-- 💬 **Questions?** [Open an issue](https://github.com/Sleepy-Studio/branding/issues)
-- 🚀 **Contribute** — [See CONTRIBUTING.md](CONTRIBUTING.md)
-- 📧 **Contact** — brand-team@sleepystudio.xyz
-
----
-
-**Last Updated**: 2026-08-02  
-**Version**: v1.0.0
+Questions and changes belong in the issue tracker for `Sleepy-Studio/brand`.
