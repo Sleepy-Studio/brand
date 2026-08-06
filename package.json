@@ -1,6 +1,6 @@
 {
   "name": "@sleepy-studio/brand",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Canonical Sleepy Studio assets, manifests, and semantic design tokens.",
   "type": "module",
   "files": [
