@@ -1,6 +1,6 @@
 {
   "name": "@sleepy-studio/brand",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Canonical Sleepy Studio assets, manifests, and semantic design tokens.",
   "type": "module",
   "files": [
@@ -39,7 +39,7 @@
     "registry": "https://npm.pkg.github.com/"
   },
   "devDependencies": {
-    "@sleepy-studio/contracts": "github:Sleepy-Studio/contracts#main"
+    "@sleepy-studio/contracts": "github:Sleepy-Studio/contracts#cf767d7a91325a436040a88b771bc99f26928a37"
   },
   "private": false
 }
