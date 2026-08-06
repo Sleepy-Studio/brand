@@ -1,0 +1,35 @@
+:root {
+  --sleepy-color-bg-canvas: #0a0a0a;
+  --sleepy-color-bg-surface: #141414;
+  --sleepy-color-bg-surface-raised: #1a1a1a;
+  --sleepy-color-text-primary: #fafafa;
+  --sleepy-color-text-muted: #a1a1a1;
+  --sleepy-color-text-dim: #737373;
+  --sleepy-color-text-inverse: #000000;
+  --sleepy-color-brand-yellow: #f4c542;
+  --sleepy-color-brand-red: #d1393e;
+  --sleepy-color-success: #7bd88f;
+  --sleepy-color-warning: #f4c542;
+  --sleepy-color-danger: #d1393e;
+  --sleepy-color-border-subtle: rgba(255, 255, 255, 0.08);
+  --sleepy-color-border-default: rgba(255, 255, 255, 0.15);
+  --sleepy-color-border-strong: rgba(255, 255, 255, 0.30);
+  --sleepy-radius-sm: 6px;
+  --sleepy-radius-md: 8px;
+  --sleepy-radius-lg: 12px;
+  --sleepy-radius-xl: 16px;
+  --sleepy-radius-round: 999px;
+  --sleepy-space-xs: 4px;
+  --sleepy-space-sm: 8px;
+  --sleepy-space-md: 12px;
+  --sleepy-space-lg: 16px;
+  --sleepy-space-xl: 24px;
+  --sleepy-motion-fast: 160ms;
+  --sleepy-motion-standard: 180ms;
+  --sleepy-motion-slow: 260ms;
+  --sleepy-shadow-surface: 0 24px 48px rgba(0, 0, 0, 0.35);
+  --sleepy-shadow-floating: 0 12px 40px rgba(0, 0, 0, 0.50);
+  --sleepy-shadow-focus: 0 0 0 2px rgba(255, 255, 255, 0.10);
+  --sleepy-glass-background: rgba(26, 26, 26, 0.72);
+  --sleepy-glass-blur: 8px;
+}
