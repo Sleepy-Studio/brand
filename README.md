@@ -1,20 +1,53 @@
 # Sleepy Studio Brand
 
-Canonical source of truth for Sleepy Studio identity, assets, visual language, voice, motion, sound, naming, and brand manifests.
+Canonical source of truth for Sleepy Studio identity, assets, visual language, voice, motion, sound, naming, manifests, and semantic design tokens.
 
-## Use assets
+## Production consumption
+
+Pin an immutable Brand release:
 
 ```html
-<img src="https://raw.githubusercontent.com/Sleepy-Studio/brand/v1.0.0/logos/svg/LogoBlack.svg" />
+<img src="https://raw.githubusercontent.com/Sleepy-Studio/brand/v1.0.0/logos/svg/LogoBlack.svg" alt="Sleepy Studio" />
 ```
-
-## Get the manifest
 
 ```bash
 curl https://raw.githubusercontent.com/Sleepy-Studio/brand/v1.0.0/assets.json
 ```
 
-Production consumers should pin immutable release tags rather than `main`.
+`main` is the development channel. Production applications should record and consume an immutable release tag.
+
+## Semantic tokens
+
+JSON tokens:
+
+```text
+tokens/tokens.json
+```
+
+CSS variables:
+
+```css
+@import url('https://raw.githubusercontent.com/Sleepy-Studio/brand/v1.0.0/tokens/tokens.css');
+
+.product-surface {
+  color: var(--sleepy-color-text-primary);
+  background: var(--sleepy-color-bg-surface);
+  border-radius: var(--sleepy-radius-lg);
+}
+```
+
+Components may expose component-specific variables, but their defaults should resolve through these semantic Brand variables.
+
+## Contracts
+
+`assets.json` and `tokens/tokens.json` conform to schemas owned by [`Sleepy-Studio/contracts`](https://github.com/Sleepy-Studio/contracts).
+
+```bash
+pnpm install
+pnpm validate
+```
+
+The development asset manifest declares `ref: "main"`. Release preparation must rewrite `ref` and every asset URL to the immutable release tag before publishing.
 
 ## Repository scope
 
@@ -34,12 +67,13 @@ assets.json
 
 Not every area is implemented yet, but Brand is the canonical owner as those systems are added.
 
-## Consumption rules
+## Ownership rules
 
-- Consume Brand assets rather than redrawing or locally modifying them.
+- Consume Brand assets rather than redrawing or independently modifying them.
 - Generated mirrors must identify their source version and remain reproducible.
 - Luci-specific creative assets belong to [`Sleepy-Studio/lucilab`](https://github.com/Sleepy-Studio/lucilab).
 - Reusable component behavior belongs to [`Sleepy-Studio/components`](https://github.com/Sleepy-Studio/components).
+- Implementation-neutral schemas and shared data contracts belong to [`Sleepy-Studio/contracts`](https://github.com/Sleepy-Studio/contracts).
 - Application repositories should document their pinned Brand release.
 
 ## Documentation
@@ -48,3 +82,5 @@ Not every area is implemented yet, but Brand is the canonical owner as those sys
 - [CONTRIBUTING.md](CONTRIBUTING.md)
 - [CHANGELOG.md](CHANGELOG.md)
 - [assets.json](assets.json)
+- [tokens/tokens.json](tokens/tokens.json)
+- [tokens/tokens.css](tokens/tokens.css)
