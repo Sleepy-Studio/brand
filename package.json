@@ -1,12 +1,13 @@
 {
   "name": "@sleepy-studio/brand",
   "version": "1.3.0",
-  "description": "Canonical Sleepy Studio identity, assets, palette, semantic visual language, motion, terminal identity, and approved icons.",
+  "description": "Canonical Sleepy Studio identity, assets, palette, semantic visual language, motion, terminal identity, approved icons, and public destinations.",
   "type": "module",
-  "files": ["assets.json", "assets", "tokens", "icons", "identity", "styles", "logos", "characters", "3d-models", "app-icons", "favicon.ico", "README.md", "INTEGRATION.md"],
+  "files": ["assets.json", "assets", "links", "tokens", "icons", "identity", "styles", "logos", "characters", "3d-models", "app-icons", "favicon.ico", "README.md", "INTEGRATION.md"],
   "exports": {
     "./assets": "./assets.json",
     "./assets/runtime": "./assets/runtime.js",
+    "./links/runtime": "./links/runtime.js",
     "./tokens": "./tokens/tokens.json",
     "./tokens.css": "./tokens/tokens.css",
     "./scrollbars.css": "./styles/scrollbars.css",
