@@ -52,6 +52,50 @@ for (const [path, validate] of checks) {
   }
 }
 
+const tokens = await readJson('tokens/tokens.json')
+for (const color of ['black', 'white', 'yellow', 'red']) {
+  if (!tokens.tokens?.color?.palette?.[color]) {
+    failed = true
+    console.error(`missing canonical palette token: color.palette.${color}`)
+  }
+}
+for (const radius of ['control', 'surface']) {
+  if (!tokens.tokens?.radius?.[radius]) {
+    failed = true
+    console.error(`missing canonical radius token: radius.${radius}`)
+  }
+}
+
+const iconManifest = await readJson('icons/icons.json')
+for (const [id, definition] of Object.entries(iconManifest.icons ?? {})) {
+  if (!definition?.glyph) {
+    failed = true
+    console.error(`invalid icon definition: ${id}`)
+    continue
+  }
+  try {
+    await access(resolvePath(`icons/svg/${id}.svg`))
+    console.log(`valid: icons/svg/${id}.svg`)
+  } catch {
+    failed = true
+    console.error(`missing canonical icon SVG: icons/svg/${id}.svg`)
+  }
+}
+
+const assetManifest = await readJson('assets.json')
+for (const asset of assetManifest.assets ?? []) {
+  for (const variant of asset.variants ?? []) {
+    if (variant.format === 'png' && !variant.file.startsWith('app-icons/')) {
+      failed = true
+      console.error(`canonical source artwork must not be PNG: ${variant.file}`)
+    }
+  }
+  if (asset.id.startsWith('sleepy-') && asset.description?.toLowerCase().includes('logo')) {
+    failed = true
+    console.error(`logo asset must use logo-* naming: ${asset.id}`)
+  }
+}
+
 for (const [path, expectedSize] of requiredIcons) {
   try {
     const metadata = await sharp(resolvePath(path)).metadata()
