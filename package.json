@@ -3,22 +3,10 @@
   "version": "1.3.0",
   "description": "Canonical Sleepy Studio identity, assets, palette, semantic visual language, motion, terminal identity, and approved icons.",
   "type": "module",
-  "files": [
-    "assets.json",
-    "tokens",
-    "icons",
-    "identity",
-    "styles",
-    "logos",
-    "characters",
-    "3d-models",
-    "app-icons",
-    "favicon.ico",
-    "README.md",
-    "INTEGRATION.md"
-  ],
+  "files": ["assets.json", "assets", "tokens", "icons", "identity", "styles", "logos", "characters", "3d-models", "app-icons", "favicon.ico", "README.md", "INTEGRATION.md"],
   "exports": {
     "./assets": "./assets.json",
+    "./assets/runtime": "./assets/runtime.js",
     "./tokens": "./tokens/tokens.json",
     "./tokens.css": "./tokens/tokens.css",
     "./scrollbars.css": "./styles/scrollbars.css",
@@ -31,6 +19,12 @@
     "./identity/logo-ascii": "./identity/logo-ascii/dom.ts",
     "./identity/logo-ascii/types": "./identity/logo-ascii/types.ts",
     "./identity/logo-ascii/style.css": "./identity/logo-ascii/logo-ascii.css",
+    "./logos/logo-black.svg": "./logos/svg/LogoBlack.svg",
+    "./logos/logo-black-red.svg": "./logos/svg/LogoBlackRed.svg",
+    "./logos/logo-white.svg": "./logos/svg/LogoWhite.svg",
+    "./logos/logo-white-red.svg": "./logos/svg/LogoWhiteRed.svg",
+    "./logos/logo-yellow.svg": "./logos/svg/LogoYellow.svg",
+    "./favicon.ico": "./favicon.ico",
     "./app-icons/favicon.ico": "./app-icons/favicon/favicon.ico",
     "./app-icons/favicon-32.png": "./app-icons/favicon/favicon-32.png",
     "./app-icons/pwa-192.png": "./app-icons/pwa/icon-192.png",
@@ -47,27 +41,11 @@
     "generate": "pnpm icons:generate && pnpm app-icons:generate",
     "validate": "node scripts/validate.mjs"
   },
-  "keywords": [
-    "brand",
-    "design-tokens",
-    "palette",
-    "icons",
-    "assets",
-    "logos",
-    "motion",
-    "ascii",
-    "sleepy-studio"
-  ],
+  "keywords": ["brand", "design-tokens", "palette", "icons", "assets", "logos", "motion", "ascii", "sleepy-studio"],
   "author": "Sleepy Studio",
   "license": "UNLICENSED",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/Sleepy-Studio/brand.git"
-  },
-  "publishConfig": {
-    "access": "public",
-    "registry": "https://npm.pkg.github.com/"
-  },
+  "repository": { "type": "git", "url": "https://github.com/Sleepy-Studio/brand.git" },
+  "publishConfig": { "access": "public", "registry": "https://npm.pkg.github.com/" },
   "devDependencies": {
     "@sleepy-studio/contracts": "github:Sleepy-Studio/contracts#cf767d7a91325a436040a88b771bc99f26928a37",
     "lucide-static": "^1.27.0",
