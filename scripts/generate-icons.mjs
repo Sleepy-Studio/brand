@@ -3,15 +3,18 @@ import { resolve } from 'node:path'
 
 const root = resolve(import.meta.dirname, '..')
 const manifest = JSON.parse(await readFile(resolve(root, 'icons/icons.json'), 'utf8'))
-const sourceRoot = resolve(root, 'node_modules/lucide-static/icons')
+const lucideRoot = resolve(root, 'node_modules/lucide-static/icons')
 const outputRoot = resolve(root, 'icons/svg')
 
 await mkdir(outputRoot, { recursive: true })
 
+let generated = 0
 for (const [id, definition] of Object.entries(manifest.icons)) {
-  const source = resolve(sourceRoot, `${definition.glyph}.svg`)
+  if (definition.source && definition.source !== 'lucide') continue
+  const source = resolve(lucideRoot, `${definition.glyph}.svg`)
   const target = resolve(outputRoot, `${id}.svg`)
   await copyFile(source, target)
+  generated += 1
 }
 
-console.log(`Generated ${Object.keys(manifest.icons).length} approved Brand icons from Lucide.`)
+console.log(`Generated ${generated} approved Lucide-derived Brand icons; retained checked-in non-Lucide marks.`)
