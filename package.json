@@ -20,6 +20,7 @@
     "./tokens": "./tokens/tokens.json",
     "./tokens.css": "./tokens/tokens.css",
     "./icons": "./icons/icons.json",
+    "./icons/runtime": "./icons/index.js",
     "./icons/*.svg": "./icons/svg/*.svg",
     "./app-icons/favicon.ico": "./app-icons/favicon/favicon.ico",
     "./app-icons/favicon-32.png": "./app-icons/favicon/favicon-32.png",
