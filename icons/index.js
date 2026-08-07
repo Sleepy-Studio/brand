@@ -16,5 +16,7 @@ export const brandIcons = Object.freeze({
 export const brandIconIds = Object.freeze(Object.keys(brandIcons))
 
 export function getBrandIcon(id) {
-  return brandIcons[id]
+  const icon = brandIcons[id]
+  if (!icon) throw new Error(`Unknown Brand icon: ${id}`)
+  return icon
 }
