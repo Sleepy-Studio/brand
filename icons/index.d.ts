@@ -9,6 +9,8 @@ export type BrandIconId =
   | 'add'
   | 'search'
   | 'menu'
+  | 'github'
+  | 'x'
 
 export const brandIcons: Readonly<Record<BrandIconId, string>>
 export const brandIconIds: readonly BrandIconId[]
