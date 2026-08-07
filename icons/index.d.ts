@@ -1,6 +1,8 @@
 export type BrandIconId =
   | 'profile'
   | 'open'
+  | 'view'
+  | 'open-new-tab'
   | 'download'
   | 'delete'
   | 'check'
