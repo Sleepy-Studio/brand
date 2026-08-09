@@ -1,6 +1,7 @@
 .s-logo-motion {
   --s-logo-motion-duration: 760ms;
   --s-logo-motion-progress: 0%;
+  --s-logo-motion-progress-duration: 2200ms;
   --s-logo-motion-pulse-duration: 1400ms;
   --s-logo-motion-orbit-duration: 5600ms;
   --s-logo-motion-orbit-color-start: var(--sleepy-color-brand-red, #c73639);
@@ -94,8 +95,16 @@
 
 .s-logo-motion[data-mode='progress'] .s-logo-motion__progress {
   display: block;
+}
+
+.s-logo-motion[data-mode='progress'][data-progress='determinate'] .s-logo-motion__progress {
   clip-path: inset(calc(100% - var(--s-logo-motion-progress)) 0 0 0);
   transition: clip-path 220ms ease-out;
+}
+
+.s-logo-motion[data-mode='progress'][data-progress='indeterminate'] .s-logo-motion__progress {
+  clip-path: inset(100% 0 0 0);
+  animation: s-logo-motion-progress-fill var(--s-logo-motion-progress-duration) cubic-bezier(.4, 0, .2, 1) infinite;
 }
 
 @keyframes s-logo-motion-reveal {
@@ -107,6 +116,13 @@
 @keyframes s-logo-motion-breathe {
   0%, 100% { opacity: .72; transform: scale(.985); }
   50% { opacity: 1; transform: scale(1.015); }
+}
+
+@keyframes s-logo-motion-progress-fill {
+  0% { clip-path: inset(100% 0 0 0); }
+  72% { clip-path: inset(0 0 0 0); }
+  88% { clip-path: inset(0 0 0 0); }
+  100% { clip-path: inset(100% 0 0 0); }
 }
 
 @keyframes s-logo-motion-orbit { to { transform: rotate(360deg); } }
@@ -128,6 +144,10 @@
     opacity: 1;
     transform: none;
     filter: none;
+  }
+
+  .s-logo-motion[data-mode='progress'][data-progress='indeterminate'] .s-logo-motion__progress {
+    clip-path: inset(50% 0 0 0);
   }
 
   .s-logo-motion[data-mode='orbit'] .s-logo-motion__orbit-rotor { transform: rotate(0deg); }
