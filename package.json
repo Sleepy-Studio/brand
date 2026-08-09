@@ -52,7 +52,7 @@
   "repository": { "type": "git", "url": "https://github.com/Sleepy-Studio/brand.git" },
   "publishConfig": { "access": "public", "registry": "https://npm.pkg.github.com/" },
   "devDependencies": {
-    "@sleepy-studio/contracts": "github:Sleepy-Studio/contracts#cf767d7a91325a436040a88b771bc99f26928a37",
+    "@sleepy-studio/contracts": "github:Sleepy-Studio/contracts#79f99e94d99773e54124bee0a8bf7bf3a61f4cc4",
     "lucide-static": "^1.27.0",
     "sharp": "^0.34.3"
   },
