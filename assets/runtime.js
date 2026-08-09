@@ -4,6 +4,7 @@ export const brandAssetUrls = Object.freeze({
   'logo-white': new URL('../logos/svg/LogoWhite.svg', import.meta.url).href,
   'logo-white-red': new URL('../logos/svg/LogoWhiteRed.svg', import.meta.url).href,
   'logo-yellow': new URL('../logos/svg/LogoYellow.svg', import.meta.url).href,
+  'logo-yellow-webp': new URL('../logos/webp/LogoYellow.webp', import.meta.url).href,
   'logo-3d': new URL('../logos/glb/SleepyLogo3d.glb', import.meta.url).href,
   favicon: new URL('../favicon.ico', import.meta.url).href,
 })
@@ -47,6 +48,7 @@ export const brandAssetCatalog = Object.freeze([
     kind: 'logo',
     variants: Object.freeze([
       Object.freeze({ format: 'svg', file: 'LogoYellow.svg', mime: 'image/svg+xml', url: brandAssetUrls['logo-yellow'] }),
+      Object.freeze({ format: 'webp', file: 'LogoYellow.webp', mime: 'image/webp', url: brandAssetUrls['logo-yellow-webp'] }),
     ]),
   }),
   Object.freeze({
