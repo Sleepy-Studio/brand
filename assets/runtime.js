@@ -1,5 +1,6 @@
 export const brandAssetUrls = Object.freeze({
   'logo-black': new URL('../logos/svg/LogoBlack.svg', import.meta.url).href,
+  'logo-red': new URL('../logos/svg/LogoRed.svg', import.meta.url).href,
   'logo-black-red': new URL('../logos/svg/LogoBlackRed.svg', import.meta.url).href,
   'logo-white': new URL('../logos/svg/LogoWhite.svg', import.meta.url).href,
   'logo-white-red': new URL('../logos/svg/LogoWhiteRed.svg', import.meta.url).href,
@@ -16,6 +17,14 @@ export const brandAssetCatalog = Object.freeze([
     kind: 'logo',
     variants: Object.freeze([
       Object.freeze({ format: 'svg', file: 'LogoBlack.svg', mime: 'image/svg+xml', url: brandAssetUrls['logo-black'] }),
+    ]),
+  }),
+  Object.freeze({
+    id: 'logo-red',
+    name: 'Logo Red',
+    kind: 'logo',
+    variants: Object.freeze([
+      Object.freeze({ format: 'svg', file: 'LogoRed.svg', mime: 'image/svg+xml', url: brandAssetUrls['logo-red'] }),
     ]),
   }),
   Object.freeze({
