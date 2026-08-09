@@ -4,7 +4,7 @@ export const brandAssetUrls = Object.freeze({
   'logo-white': new URL('../logos/svg/LogoWhite.svg', import.meta.url).href,
   'logo-white-red': new URL('../logos/svg/LogoWhiteRed.svg', import.meta.url).href,
   'logo-yellow': new URL('../logos/svg/LogoYellow.svg', import.meta.url).href,
-  'logo-3d': new URL('../3d-models/glb/SleepyLogo3d.glb', import.meta.url).href,
+  'logo-3d': new URL('../logos/glb/SleepyLogo3d.glb', import.meta.url).href,
   favicon: new URL('../favicon.ico', import.meta.url).href,
 })
 
