@@ -1,5 +1,6 @@
 .s-logo-motion {
   --s-logo-motion-duration: 760ms;
+  --s-logo-motion-startup-duration: 2600ms;
   --s-logo-motion-progress: 0%;
   --s-logo-motion-progress-duration: 2200ms;
   --s-logo-motion-pulse-duration: 1400ms;
@@ -73,7 +74,7 @@
 
 .s-logo-motion[data-mode='startup'] .s-logo-motion__layer {
   opacity: 0;
-  animation: s-logo-motion-reveal var(--s-logo-motion-duration) cubic-bezier(.2, .8, .2, 1) forwards;
+  animation: s-logo-motion-reveal var(--s-logo-motion-startup-duration) cubic-bezier(.2, .8, .2, 1) infinite;
   animation-delay: calc(var(--s-logo-motion-layer, 0) * 90ms);
 }
 
@@ -109,8 +110,9 @@
 
 @keyframes s-logo-motion-reveal {
   0% { opacity: 0; transform: translateY(10px) scale(.94); filter: blur(7px); }
-  70% { opacity: 1; transform: translateY(0) scale(1.015); filter: blur(0); }
-  100% { opacity: 1; transform: translateY(0) scale(1); filter: blur(0); }
+  28% { opacity: 1; transform: translateY(0) scale(1.015); filter: blur(0); }
+  38%, 82% { opacity: 1; transform: translateY(0) scale(1); filter: blur(0); }
+  100% { opacity: 0; transform: translateY(6px) scale(.97); filter: blur(4px); }
 }
 
 @keyframes s-logo-motion-breathe {
