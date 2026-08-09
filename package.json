@@ -23,6 +23,7 @@
     "./identity/audio-reactive-logo": "./identity/audio-reactive-logo/dom.ts",
     "./identity/audio-reactive-logo/types": "./identity/audio-reactive-logo/types.ts",
     "./identity/audio-reactive-logo/style.css": "./identity/audio-reactive-logo/audio-reactive-logo.css",
+    "./logos": "./logos/index.ts",
     "./logos/logo-black.svg": "./logos/svg/LogoBlack.svg",
     "./logos/logo-black-red.svg": "./logos/svg/LogoBlackRed.svg",
     "./logos/logo-white.svg": "./logos/svg/LogoWhite.svg",
