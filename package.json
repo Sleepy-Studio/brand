@@ -25,6 +25,7 @@
     "./identity/audio-reactive-logo/style.css": "./identity/audio-reactive-logo/audio-reactive-logo.css",
     "./logos": "./logos/index.ts",
     "./logos/logo-black.svg": "./logos/svg/LogoBlack.svg",
+    "./logos/logo-red.svg": "./logos/svg/LogoRed.svg",
     "./logos/logo-black-red.svg": "./logos/svg/LogoBlackRed.svg",
     "./logos/logo-white.svg": "./logos/svg/LogoWhite.svg",
     "./logos/logo-white-red.svg": "./logos/svg/LogoWhiteRed.svg",
@@ -43,9 +44,10 @@
   },
   "scripts": {
     "icons:generate": "node scripts/generate-icons.mjs",
+    "logos:generate-colors": "node scripts/generate-logo-color-variants.mjs",
     "logos:generate-raster": "node scripts/generate-logo-raster.mjs",
     "app-icons:generate": "node scripts/generate-app-icons.mjs",
-    "generate": "pnpm icons:generate && pnpm logos:generate-raster && pnpm app-icons:generate",
+    "generate": "pnpm icons:generate && pnpm logos:generate-colors && pnpm logos:generate-raster && pnpm app-icons:generate",
     "validate": "node scripts/validate.mjs"
   },
   "keywords": ["brand", "design-tokens", "palette", "icons", "assets", "logos", "motion", "ascii", "sleepy-studio"],
