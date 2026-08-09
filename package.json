@@ -29,6 +29,7 @@
     "./logos/logo-white.svg": "./logos/svg/LogoWhite.svg",
     "./logos/logo-white-red.svg": "./logos/svg/LogoWhiteRed.svg",
     "./logos/logo-yellow.svg": "./logos/svg/LogoYellow.svg",
+    "./logos/logo-yellow.webp": "./logos/webp/LogoYellow.webp",
     "./favicon.ico": "./favicon.ico",
     "./app-icons/favicon.ico": "./app-icons/favicon/favicon.ico",
     "./app-icons/favicon-32.png": "./app-icons/favicon/favicon-32.png",
@@ -42,8 +43,9 @@
   },
   "scripts": {
     "icons:generate": "node scripts/generate-icons.mjs",
+    "logos:generate-raster": "node scripts/generate-logo-raster.mjs",
     "app-icons:generate": "node scripts/generate-app-icons.mjs",
-    "generate": "pnpm icons:generate && pnpm app-icons:generate",
+    "generate": "pnpm icons:generate && pnpm logos:generate-raster && pnpm app-icons:generate",
     "validate": "node scripts/validate.mjs"
   },
   "keywords": ["brand", "design-tokens", "palette", "icons", "assets", "logos", "motion", "ascii", "sleepy-studio"],
