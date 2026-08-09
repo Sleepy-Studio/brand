@@ -1,12 +1,15 @@
-name: Generate canonical yellow WebP
+name: Generate canonical logo variants
 
 on:
   push:
     branches:
       - feat/runtime-asset-catalog-social-actions
     paths:
+      - 'logos/svg/LogoBlackRed.svg'
       - 'logos/svg/LogoYellow.svg'
+      - 'scripts/generate-logo-color-variants.mjs'
       - 'scripts/generate-logo-raster.mjs'
+      - 'package.json'
 
 permissions:
   contents: write
@@ -26,14 +29,15 @@ jobs:
           node-version: 22
           cache: pnpm
       - run: pnpm install --frozen-lockfile
+      - run: pnpm logos:generate-colors
       - run: pnpm logos:generate-raster
-      - name: Commit generated WebP
+      - name: Commit generated logo variants
         run: |
-          if git diff --quiet -- logos/webp/LogoYellow.webp; then
+          if git diff --quiet -- logos/svg/LogoBlack.svg logos/svg/LogoRed.svg logos/webp/LogoYellow.webp; then
             exit 0
           fi
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add logos/webp/LogoYellow.webp
-          git commit -m 'chore: generate canonical yellow WebP'
+          git add logos/svg/LogoBlack.svg logos/svg/LogoRed.svg logos/webp/LogoYellow.webp
+          git commit -m 'chore: generate canonical logo variants'
           git push
