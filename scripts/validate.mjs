@@ -52,6 +52,67 @@ for (const [path, validate] of checks) {
   }
 }
 
+const tokens = await readJson('tokens/tokens.json')
+for (const color of ['black', 'white', 'yellow', 'red']) {
+  if (!tokens.tokens?.color?.palette?.[color]) {
+    failed = true
+    console.error(`missing canonical palette token: color.palette.${color}`)
+  }
+}
+for (const radius of ['control', 'surface']) {
+  if (!tokens.tokens?.radius?.[radius]) {
+    failed = true
+    console.error(`missing canonical radius token: radius.${radius}`)
+  }
+}
+
+const iconManifest = await readJson('icons/icons.json')
+for (const [id, definition] of Object.entries(iconManifest.icons ?? {})) {
+  let iconPath
+
+  if (definition?.source === 'lucide') {
+    if (!definition.glyph) {
+      failed = true
+      console.error(`invalid Lucide icon definition: ${id}`)
+      continue
+    }
+    iconPath = `icons/svg/${id}.svg`
+  } else if (definition?.source === 'static') {
+    if (!definition.file) {
+      failed = true
+      console.error(`invalid static icon definition: ${id}`)
+      continue
+    }
+    iconPath = `icons/svg/${definition.file}`
+  } else {
+    failed = true
+    console.error(`invalid icon source: ${id}`)
+    continue
+  }
+
+  try {
+    await access(resolvePath(iconPath))
+    console.log(`valid: ${iconPath}`)
+  } catch {
+    failed = true
+    console.error(`missing canonical icon SVG: ${iconPath}`)
+  }
+}
+
+const assetManifest = await readJson('assets.json')
+for (const asset of assetManifest.assets ?? []) {
+  for (const variant of asset.variants ?? []) {
+    if (variant.format === 'png' && !variant.file.startsWith('app-icons/')) {
+      failed = true
+      console.error(`canonical source artwork must not be PNG: ${variant.file}`)
+    }
+  }
+  if (asset.id.startsWith('sleepy-') && asset.description?.toLowerCase().includes('logo')) {
+    failed = true
+    console.error(`logo asset must use logo-* naming: ${asset.id}`)
+  }
+}
+
 for (const [path, expectedSize] of requiredIcons) {
   try {
     const metadata = await sharp(resolvePath(path)).metadata()

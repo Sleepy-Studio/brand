@@ -1,0 +1,157 @@
+.s-logo-motion {
+  --s-logo-motion-duration: 760ms;
+  --s-logo-motion-startup-duration: 2600ms;
+  --s-logo-motion-progress: 0%;
+  --s-logo-motion-progress-duration: 2200ms;
+  --s-logo-motion-pulse-duration: 1400ms;
+  --s-logo-motion-orbit-duration: 5600ms;
+  --s-logo-motion-orbit-color-start: var(--sleepy-color-brand-red, #c73639);
+  --s-logo-motion-orbit-color-mid: var(--sleepy-color-brand-yellow, #f4c542);
+  display: inline-grid;
+  place-items: center;
+  position: relative;
+  isolation: isolate;
+  line-height: 0;
+}
+
+.s-logo-motion__svg,
+.s-logo-motion__progress-svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  overflow: visible;
+}
+
+.s-logo-motion__layer {
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+.s-logo-motion__orbit-anchor,
+.s-logo-motion__orbit-rotor {
+  pointer-events: none;
+}
+
+.s-logo-motion__orbit-rotor {
+  transform-box: view-box;
+  transform-origin: 0 0;
+}
+
+.s-logo-motion__orbit-copy,
+.s-logo-motion__orbit-copy * {
+  fill: currentColor;
+}
+
+.s-logo-motion__orbit-source,
+.s-logo-motion__orbit-anchor {
+  transition: opacity 160ms ease-out;
+}
+
+.s-logo-motion:not([data-mode='orbit']) .s-logo-motion__orbit-anchor {
+  opacity: 0;
+}
+
+.s-logo-motion[data-mode='orbit'] {
+  padding: 18%;
+}
+
+.s-logo-motion[data-mode='orbit'] .s-logo-motion__orbit-source {
+  opacity: 0;
+}
+
+.s-logo-motion[data-mode='orbit'] .s-logo-motion__orbit-anchor {
+  opacity: 1;
+}
+
+.s-logo-motion[data-mode='orbit'] .s-logo-motion__orbit-rotor {
+  animation: s-logo-motion-orbit var(--s-logo-motion-orbit-duration) linear infinite;
+}
+
+.s-logo-motion[data-mode='orbit'] .s-logo-motion__orbit-copy {
+  color: var(--s-logo-motion-orbit-color-start);
+  animation: s-logo-motion-orbit-color var(--s-logo-motion-orbit-duration) ease-in-out infinite;
+}
+
+.s-logo-motion[data-mode='startup'] .s-logo-motion__layer {
+  opacity: 0;
+  animation: s-logo-motion-reveal var(--s-logo-motion-startup-duration) cubic-bezier(.2, .8, .2, 1) infinite;
+  animation-delay: calc(var(--s-logo-motion-layer, 0) * 90ms);
+}
+
+.s-logo-motion[data-mode='loading'] .s-logo-motion__svg {
+  animation: s-logo-motion-breathe var(--s-logo-motion-pulse-duration) ease-in-out infinite;
+}
+
+.s-logo-motion__progress {
+  display: none;
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.s-logo-motion[data-mode='progress'] .s-logo-motion__svg {
+  opacity: .18;
+}
+
+.s-logo-motion[data-mode='progress'] .s-logo-motion__progress {
+  display: block;
+}
+
+.s-logo-motion[data-mode='progress'][data-progress='determinate'] .s-logo-motion__progress {
+  clip-path: inset(calc(100% - var(--s-logo-motion-progress)) 0 0 0);
+  transition: clip-path 220ms ease-out;
+}
+
+.s-logo-motion[data-mode='progress'][data-progress='indeterminate'] .s-logo-motion__progress {
+  clip-path: inset(100% 0 0 0);
+  animation: s-logo-motion-progress-fill var(--s-logo-motion-progress-duration) cubic-bezier(.4, 0, .2, 1) infinite;
+}
+
+@keyframes s-logo-motion-reveal {
+  0% { opacity: 0; transform: translateY(10px) scale(.94); filter: blur(7px); }
+  28% { opacity: 1; transform: translateY(0) scale(1.015); filter: blur(0); }
+  38%, 82% { opacity: 1; transform: translateY(0) scale(1); filter: blur(0); }
+  100% { opacity: 0; transform: translateY(6px) scale(.97); filter: blur(4px); }
+}
+
+@keyframes s-logo-motion-breathe {
+  0%, 100% { opacity: .72; transform: scale(.985); }
+  50% { opacity: 1; transform: scale(1.015); }
+}
+
+@keyframes s-logo-motion-progress-fill {
+  0% { clip-path: inset(100% 0 0 0); }
+  72% { clip-path: inset(0 0 0 0); }
+  88% { clip-path: inset(0 0 0 0); }
+  100% { clip-path: inset(100% 0 0 0); }
+}
+
+@keyframes s-logo-motion-orbit { to { transform: rotate(360deg); } }
+
+@keyframes s-logo-motion-orbit-color {
+  0%, 100% { color: var(--s-logo-motion-orbit-color-start); }
+  50% { color: var(--s-logo-motion-orbit-color-mid); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .s-logo-motion *,
+  .s-logo-motion::before,
+  .s-logo-motion::after {
+    animation: none !important;
+    transition: none !important;
+  }
+
+  .s-logo-motion[data-mode='startup'] .s-logo-motion__layer {
+    opacity: 1;
+    transform: none;
+    filter: none;
+  }
+
+  .s-logo-motion[data-mode='progress'][data-progress='indeterminate'] .s-logo-motion__progress {
+    clip-path: inset(50% 0 0 0);
+  }
+
+  .s-logo-motion[data-mode='orbit'] .s-logo-motion__orbit-rotor { transform: rotate(0deg); }
+  .s-logo-motion[data-mode='orbit'] .s-logo-motion__orbit-copy { color: var(--s-logo-motion-orbit-color-start); }
+}

@@ -1,0 +1,30 @@
+{
+  "version": "1.2.0",
+  "source": {
+    "library": "lucide",
+    "package": "lucide-static",
+    "license": "ISC"
+  },
+  "style": {
+    "viewBox": "0 0 24 24",
+    "strokeWidth": 2,
+    "strokeLinecap": "round",
+    "strokeLinejoin": "round"
+  },
+  "icons": {
+    "profile": { "source": "lucide", "glyph": "user-round" },
+    "open": { "source": "lucide", "glyph": "external-link" },
+    "view": { "source": "lucide", "glyph": "eye" },
+    "open-new-tab": { "source": "lucide", "glyph": "external-link" },
+    "download": { "source": "lucide", "glyph": "download" },
+    "delete": { "source": "lucide", "glyph": "trash-2" },
+    "check": { "source": "lucide", "glyph": "check" },
+    "save": { "source": "lucide", "glyph": "save" },
+    "settings": { "source": "lucide", "glyph": "settings" },
+    "add": { "source": "lucide", "glyph": "plus" },
+    "search": { "source": "lucide", "glyph": "search" },
+    "menu": { "source": "lucide", "glyph": "menu" },
+    "github": { "source": "static", "file": "github.svg" },
+    "x": { "source": "static", "file": "x.svg" }
+  }
+}

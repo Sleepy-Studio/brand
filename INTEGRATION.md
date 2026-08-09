@@ -1,97 +1,94 @@
 # Brand integration
 
-Use `Sleepy-Studio/brand` as the canonical source for Sleepy Studio assets and semantic visual tokens.
+Use `Sleepy-Studio/brand` as the canonical source for Sleepy Studio identity, static assets, semantic design tokens, icons, motion, terminal identity, global visual rules, and public destinations.
 
-## Choose a release
+Brand owns identity and visual meaning. It does not own reusable interface implementation or product composition.
 
-Production consumers must pin an immutable tag:
+## Package-first consumption
 
-```ts
-const BRAND_REF = 'v1.0.0'
-const BRAND_BASE = `https://raw.githubusercontent.com/Sleepy-Studio/brand/${BRAND_REF}`
-```
-
-Use `main` only for local development or deliberate preview environments.
-
-## Asset manifest
+For application and component builds, prefer the package exports so the bundler resolves immutable package assets correctly.
 
 ```ts
-const manifest = await fetch(`${BRAND_BASE}/assets.json`).then((response) => {
-  if (!response.ok) throw new Error(`Brand manifest request failed: ${response.status}`)
-  return response.json()
-})
-
-const asset = manifest.assets.find((item: { id: string }) => item.id === 'sleepy-yellow')
-const url = asset?.variants[0]?.url
+import logoWhite from '@sleepy-studio/brand/logos/logo-white.svg'
+import logoYellow from '@sleepy-studio/brand/logos/logo-yellow.svg'
+import favicon from '@sleepy-studio/brand/favicon.ico'
+import { brandLogoVariants, brandLogoLabels, brandLogoBackdrops } from '@sleepy-studio/brand/logos'
+import { getBrandLink } from '@sleepy-studio/brand/links/runtime'
 ```
 
-The manifest is validated against the asset-manifest schema from `Sleepy-Studio/contracts`.
+Canonical logo variants are:
 
-## Direct asset usage
+- `black`
+- `black-red`
+- `white`
+- `white-red`
+- `yellow`
 
-```html
-<img
-  src="https://raw.githubusercontent.com/Sleepy-Studio/brand/v1.0.0/logos/svg/LogoBlack.svg"
-  alt="Sleepy Studio"
-/>
+Browser-rendered static assets should be imported through their direct package exports. Do not construct browser `<img>` URLs by resolving relative paths from `assets/runtime`; bundler optimization can relocate modules and invalidate those relative URLs. `assets/runtime` is discovery metadata for non-rendering workflows, not the browser rendering authority.
+
+## Identity renderers
+
+Brand owns logo-specific behavior and presentation:
+
+```ts
+import { createLogoMotion } from '@sleepy-studio/brand/identity/logo-motion'
+import { createLogoAscii } from '@sleepy-studio/brand/identity/logo-ascii'
+import { createAudioReactiveLogo } from '@sleepy-studio/brand/identity/audio-reactive-logo'
 ```
 
-```html
-<link
-  rel="icon"
-  href="https://raw.githubusercontent.com/Sleepy-Studio/brand/v1.0.0/favicon.ico"
-/>
-```
+Use generic `Spinner` and `Progress` from `@sleepy-studio/components` for interface loading state. Use Brand identity renderers only when the Sleepy Studio mark itself is the visual state.
 
-## Semantic tokens
+## Semantic tokens and global visual rules
 
-Use the canonical CSS token export before component styles:
-
-```css
-@import url('https://raw.githubusercontent.com/Sleepy-Studio/brand/v1.0.0/tokens/tokens.css');
-@import url('./application.css');
-```
-
-```css
-.application-card {
-  color: var(--sleepy-color-text-primary);
-  background: var(--sleepy-color-bg-surface);
-  border: 1px solid var(--sleepy-color-border-default);
-  border-radius: var(--sleepy-radius-lg);
-  box-shadow: var(--sleepy-shadow-surface);
-  transition: border-color var(--sleepy-motion-standard) ease;
-}
-```
-
-Machine-readable tokens are available from `tokens/tokens.json` and validate against the design-token schema in `Sleepy-Studio/contracts`.
-
-## Package consumption
-
-When the Brand package is installed from GitHub Packages:
+Import Brand tokens before reusable component or application styles. Import the Brand scrollbar policy globally for browser surfaces.
 
 ```css
 @import '@sleepy-studio/brand/tokens.css';
+@import '@sleepy-studio/brand/scrollbars.css';
 ```
+
+Components may consume Brand semantic tokens as implementation defaults, but Components must not re-export Brand tokens, scrollbars, icons, links, logos, or identity renderers as convenience aliases.
+
+Applications may compose Components and override component-local variables where supported without redefining canonical Brand values.
+
+## Icons and action semantics
+
+Use approved Brand icon IDs and runtime helpers rather than creating product-local equivalents for shared meanings. Canonical Button action semantics such as `view`, `open`, and `open-new-tab` are implemented by Components and resolve their shared visual meaning through Brand.
+
+## Public destinations
+
+Use the Brand runtime instead of duplicating organization URLs in products:
+
+```ts
+import { getBrandLink } from '@sleepy-studio/brand/links/runtime'
+
+const github = getBrandLink('github')
+const x = getBrandLink('x')
+const website = getBrandLink('website')
+const email = getBrandLink('email')
+```
+
+## Machine-readable assets and tokens
+
+For discovery, documentation generation, validation, or non-rendering tooling:
 
 ```ts
 import manifest from '@sleepy-studio/brand/assets' with { type: 'json' }
 import tokens from '@sleepy-studio/brand/tokens' with { type: 'json' }
 ```
 
-## Component integration
+The asset manifest validates against the shared asset-manifest contract. The token document validates against the shared design-token contract in `Sleepy-Studio/contracts`.
 
-`Sleepy-Studio/components` owns reusable rendering and interaction. Component-specific variables should use Brand semantic variables as their defaults:
+## Foundation compatibility
 
-```css
-.s-action-button {
-  --s-action-button-color: var(--sleepy-color-text-primary);
-  --s-action-button-bg: var(--sleepy-glass-background);
-  --s-action-button-radius: var(--sleepy-radius-lg);
-  --s-action-button-duration: var(--sleepy-motion-standard);
-}
+Brand pins the same immutable Contracts compatibility checkpoint used by Components during coordinated foundation work. pnpm install-time approval for the git-hosted Contracts package must be durable at the repository URL level in `pnpm-workspace.yaml`:
+
+```yaml
+allowBuilds:
+  '@sleepy-studio/contracts@git+https://github.com/Sleepy-Studio/contracts.git': true
 ```
 
-Applications may override component variables without redefining canonical Brand values.
+Do not use commit-specific `allowBuilds` entries or `dangerouslyAllowAllBuilds`.
 
 ## Validation
 
@@ -103,30 +100,28 @@ pnpm install
 pnpm validate
 ```
 
-Validation checks:
+Validation checks canonical Brand documents against their shared Contracts schemas and verifies generated/declared Brand assets according to repository rules.
 
-- `assets.json` against the shared asset-manifest contract
-- `tokens/tokens.json` against the shared design-token contract
+Do not publish or tag a Brand revision until validation succeeds locally.
 
-Brand pins Contracts validation to a verified commit. When updating that pin, update the exact matching git locator under `allowBuilds` in `pnpm-workspace.yaml`, remove stale install state, reinstall, and validate.
+## Releases
 
-## Release rule
+Production consumers should use immutable compatible releases or tags. Branch pins are acceptable during coordinated foundation refactors and deliberate preview work only.
 
 Before creating a Brand release tag:
 
-1. Set the manifest `ref` to the release tag.
-2. Rewrite every manifest asset URL to that tag.
+1. Set release-bound manifest references to the immutable release tag where required.
+2. Rewrite release-bound asset URLs to that tag where required.
 3. Run validation.
-4. Confirm all referenced files exist at that commit.
-5. Tag the validated commit.
+4. Confirm referenced files exist at the release commit.
+5. Tag only the validated commit.
 
 A manifest whose `ref` is `main` is a development manifest and must not be treated as immutable.
 
 ## Repository ownership
 
-- Brand: canonical assets, semantic tokens, motion, sound, voice, and visual language.
-- Contracts: schemas, types, validators, and compatibility rules.
-- Components: reusable visual implementation and interaction.
-- Applications: product composition, data fetching, routing, and orchestration.
-
-Questions and changes belong in the issue tracker for `Sleepy-Studio/brand`.
+- Brand: identity, canonical assets, semantic tokens, icons, motion, sound, voice, copy/naming guidance, global visual rules, favicon/app marks, and public destinations.
+- Contracts: implementation-neutral schemas, types, validators, fixtures, and compatibility rules.
+- Components: reusable interface vocabulary and interaction; DOM is the baseline renderer and React is an optional adapter.
+- Sleepy: ecosystem/runtime architecture, capability routing, cross-surface coordination, and Sleepy-specific runtime-domain definitions.
+- Applications: product composition, data fetching, routing, state, and orchestration.

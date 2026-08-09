@@ -1,0 +1,51 @@
+/* Canonical Sleepy Studio scrollbar treatment for document and component scroll regions. */
+:root {
+  --sleepy-scrollbar-size: 10px;
+  --sleepy-scrollbar-track: rgba(255, 255, 255, 0.035);
+  --sleepy-scrollbar-thumb: rgba(255, 255, 255, 0.18);
+  --sleepy-scrollbar-thumb-hover: rgba(244, 197, 66, 0.72);
+}
+
+html,
+body,
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--sleepy-scrollbar-thumb) var(--sleepy-scrollbar-track);
+}
+
+html::-webkit-scrollbar,
+body::-webkit-scrollbar,
+*::-webkit-scrollbar {
+  width: var(--sleepy-scrollbar-size);
+  height: var(--sleepy-scrollbar-size);
+}
+
+html::-webkit-scrollbar-track,
+body::-webkit-scrollbar-track,
+*::-webkit-scrollbar-track {
+  background: var(--sleepy-scrollbar-track);
+}
+
+html::-webkit-scrollbar-thumb,
+body::-webkit-scrollbar-thumb,
+*::-webkit-scrollbar-thumb {
+  min-width: 28px;
+  min-height: 28px;
+  border: 2px solid transparent;
+  border-radius: var(--sleepy-radius-round, 999px);
+  background: var(--sleepy-scrollbar-thumb);
+  background-clip: padding-box;
+}
+
+html::-webkit-scrollbar-thumb:hover,
+body::-webkit-scrollbar-thumb:hover,
+*::-webkit-scrollbar-thumb:hover {
+  background: var(--sleepy-scrollbar-thumb-hover);
+  background-clip: padding-box;
+}
+
+html::-webkit-scrollbar-corner,
+body::-webkit-scrollbar-corner,
+*::-webkit-scrollbar-corner {
+  background: transparent;
+}
