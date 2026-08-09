@@ -4,7 +4,7 @@ import { fileURLToPath } from 'node:url'
 import sharp from 'sharp'
 
 const root = fileURLToPath(new URL('..', import.meta.url))
-const sourceLogo = join(root, 'logos/png/sleepyyellow.png')
+const sourceLogo = join(root, 'logos/webp/LogoYellow.webp')
 const outputRoot = join(root, 'app-icons')
 
 const palette = {

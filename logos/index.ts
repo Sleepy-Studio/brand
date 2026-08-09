@@ -1,5 +1,6 @@
 export const brandLogoVariants = [
   'black',
+  'red',
   'black-red',
   'white',
   'white-red',
@@ -11,6 +12,7 @@ export type BrandLogoBackdrop = 'light' | 'dark'
 
 export const brandLogoLabels: Readonly<Record<BrandLogoVariant, string>> = Object.freeze({
   black: 'Sleepy Studio black logo',
+  red: 'Sleepy Studio red logo',
   'black-red': 'Sleepy Studio black and red logo',
   white: 'Sleepy Studio white logo',
   'white-red': 'Sleepy Studio white and red logo',
@@ -19,6 +21,7 @@ export const brandLogoLabels: Readonly<Record<BrandLogoVariant, string>> = Objec
 
 export const brandLogoBackdrops: Readonly<Record<BrandLogoVariant, BrandLogoBackdrop>> = Object.freeze({
   black: 'light',
+  red: 'light',
   'black-red': 'light',
   white: 'dark',
   'white-red': 'dark',

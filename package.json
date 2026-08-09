@@ -25,10 +25,12 @@
     "./identity/audio-reactive-logo/style.css": "./identity/audio-reactive-logo/audio-reactive-logo.css",
     "./logos": "./logos/index.ts",
     "./logos/logo-black.svg": "./logos/svg/LogoBlack.svg",
+    "./logos/logo-red.svg": "./logos/svg/LogoRed.svg",
     "./logos/logo-black-red.svg": "./logos/svg/LogoBlackRed.svg",
     "./logos/logo-white.svg": "./logos/svg/LogoWhite.svg",
     "./logos/logo-white-red.svg": "./logos/svg/LogoWhiteRed.svg",
     "./logos/logo-yellow.svg": "./logos/svg/LogoYellow.svg",
+    "./logos/logo-yellow.webp": "./logos/webp/LogoYellow.webp",
     "./favicon.ico": "./favicon.ico",
     "./app-icons/favicon.ico": "./app-icons/favicon/favicon.ico",
     "./app-icons/favicon-32.png": "./app-icons/favicon/favicon-32.png",
@@ -42,8 +44,10 @@
   },
   "scripts": {
     "icons:generate": "node scripts/generate-icons.mjs",
+    "logos:generate-colors": "node scripts/generate-logo-color-variants.mjs",
+    "logos:generate-raster": "node scripts/generate-logo-raster.mjs",
     "app-icons:generate": "node scripts/generate-app-icons.mjs",
-    "generate": "pnpm icons:generate && pnpm app-icons:generate",
+    "generate": "pnpm icons:generate && pnpm logos:generate-colors && pnpm logos:generate-raster && pnpm app-icons:generate",
     "validate": "node scripts/validate.mjs"
   },
   "keywords": ["brand", "design-tokens", "palette", "icons", "assets", "logos", "motion", "ascii", "sleepy-studio"],
@@ -52,7 +56,7 @@
   "repository": { "type": "git", "url": "https://github.com/Sleepy-Studio/brand.git" },
   "publishConfig": { "access": "public", "registry": "https://npm.pkg.github.com/" },
   "devDependencies": {
-    "@sleepy-studio/contracts": "github:Sleepy-Studio/contracts#79f99e94d99773e54124bee0a8bf7bf3a61f4cc4",
+    "@sleepy-studio/contracts": "github:Sleepy-Studio/contracts#main",
     "lucide-static": "^1.27.0",
     "sharp": "^0.34.3"
   },
