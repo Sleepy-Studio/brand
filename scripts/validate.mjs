@@ -68,17 +68,34 @@ for (const radius of ['control', 'surface']) {
 
 const iconManifest = await readJson('icons/icons.json')
 for (const [id, definition] of Object.entries(iconManifest.icons ?? {})) {
-  if (!definition?.glyph) {
+  let iconPath
+
+  if (definition?.source === 'lucide') {
+    if (!definition.glyph) {
+      failed = true
+      console.error(`invalid Lucide icon definition: ${id}`)
+      continue
+    }
+    iconPath = `icons/svg/${id}.svg`
+  } else if (definition?.source === 'static') {
+    if (!definition.file) {
+      failed = true
+      console.error(`invalid static icon definition: ${id}`)
+      continue
+    }
+    iconPath = `icons/svg/${definition.file}`
+  } else {
     failed = true
-    console.error(`invalid icon definition: ${id}`)
+    console.error(`invalid icon source: ${id}`)
     continue
   }
+
   try {
-    await access(resolvePath(`icons/svg/${id}.svg`))
-    console.log(`valid: icons/svg/${id}.svg`)
+    await access(resolvePath(iconPath))
+    console.log(`valid: ${iconPath}`)
   } catch {
     failed = true
-    console.error(`missing canonical icon SVG: icons/svg/${id}.svg`)
+    console.error(`missing canonical icon SVG: ${iconPath}`)
   }
 }
 
