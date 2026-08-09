@@ -125,36 +125,8 @@ function isolateCanonicalTopCircle(svg: SVGSVGElement, source: SVGGraphicsElemen
   clipPath.append(clipCircle)
   defs.append(clipPath)
 
-  const mask = document.createElementNS(SVG_NS, 'mask')
-  const maskId = `s-logo-motion-orbit-mask-${idSeed}`
-  mask.id = maskId
-  mask.setAttribute('maskUnits', 'userSpaceOnUse')
-  mask.setAttribute('x', String(viewBox.x))
-  mask.setAttribute('y', String(viewBox.y))
-  mask.setAttribute('width', String(viewBox.width))
-  mask.setAttribute('height', String(viewBox.height))
-
-  const maskBase = document.createElementNS(SVG_NS, 'rect')
-  maskBase.setAttribute('x', String(viewBox.x))
-  maskBase.setAttribute('y', String(viewBox.y))
-  maskBase.setAttribute('width', String(viewBox.width))
-  maskBase.setAttribute('height', String(viewBox.height))
-  maskBase.setAttribute('fill', 'white')
-
-  const maskCircle = document.createElementNS(SVG_NS, 'circle')
-  maskCircle.setAttribute('cx', String(centerX))
-  maskCircle.setAttribute('cy', String(centerY))
-  maskCircle.setAttribute('r', String(radius * 1.015))
-  maskCircle.setAttribute('fill', 'black')
-  mask.append(maskBase, maskCircle)
-  defs.append(mask)
-
-  source.setAttribute('mask', `url(#${maskId})`)
-  source.classList.add('s-logo-motion__orbit-source')
-
   const copy = source.cloneNode(true) as SVGGraphicsElement
   copy.removeAttribute('id')
-  copy.removeAttribute('mask')
   copy.classList.remove('s-logo-motion__layer', 's-logo-motion__orbit-source')
   copy.classList.add('s-logo-motion__orbit-copy')
   copy.setAttribute('clip-path', `url(#${clipId})`)
@@ -169,19 +141,24 @@ function prepareOrbit(svg: SVGSVGElement, selector?: string): void {
     const viewBox = getViewBox(svg)
     const contentBox = svg.getBBox()
     const canonical = selector ? null : isolateCanonicalTopCircle(svg, source)
-    const sourceBox = canonical ? new DOMRect(canonical.centerX - canonical.radius, canonical.centerY - canonical.radius, canonical.radius * 2, canonical.radius * 2) : source.getBBox()
+    const sourceBox = canonical
+      ? new DOMRect(canonical.centerX - canonical.radius, canonical.centerY - canonical.radius, canonical.radius * 2, canonical.radius * 2)
+      : source.getBBox()
     const centerX = viewBox.x + viewBox.width / 2
     const centerY = viewBox.y + viewBox.height / 2
     const sourceCenterX = sourceBox.x + sourceBox.width / 2
     const sourceCenterY = sourceBox.y + sourceBox.height / 2
     const sourceRadius = Math.max(sourceBox.width, sourceBox.height) / 2
-    const leftReach = centerX - contentBox.x
-    const rightReach = contentBox.x + contentBox.width - centerX
-    const topReach = centerY - contentBox.y
-    const bottomReach = contentBox.y + contentBox.height - centerY
-    const contentRadius = Math.max(leftReach, rightReach, topReach, bottomReach)
-    const gap = Math.max(viewBox.width, viewBox.height) * 0.055
-    const orbitRadius = contentRadius + sourceRadius + gap
+
+    const corners = [
+      [contentBox.x, contentBox.y],
+      [contentBox.x + contentBox.width, contentBox.y],
+      [contentBox.x, contentBox.y + contentBox.height],
+      [contentBox.x + contentBox.width, contentBox.y + contentBox.height],
+    ] as const
+    const contentRadius = Math.max(...corners.map(([x, y]) => Math.hypot(x - centerX, y - centerY)))
+    const safetyGap = Math.max(viewBox.width, viewBox.height) * 0.12
+    const orbitRadius = contentRadius + sourceRadius + safetyGap
 
     const anchor = document.createElementNS(SVG_NS, 'g')
     anchor.classList.add('s-logo-motion__orbit-anchor')
@@ -193,7 +170,6 @@ function prepareOrbit(svg: SVGSVGElement, selector?: string): void {
     copy.classList.remove('s-logo-motion__layer')
     copy.classList.add('s-logo-motion__orbit-copy')
     copy.setAttribute('transform', `translate(${-sourceCenterX} ${-orbitRadius - sourceCenterY})`)
-    if (!canonical) source.classList.add('s-logo-motion__orbit-source')
     rotor.append(copy)
     anchor.append(rotor)
     svg.append(anchor)
