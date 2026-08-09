@@ -3,10 +3,17 @@ import type {
   LogoMotionMode,
   LogoMotionOptions,
   LogoMotionSource,
+  LogoMotionTint,
 } from './types'
 import './logo-motion.css'
 
 const SVG_NS = 'http://www.w3.org/2000/svg'
+const TINTS: Record<Exclude<LogoMotionTint, 'source'>, string> = {
+  white: '#ffffff',
+  yellow: '#f4c542',
+  black: '#000000',
+  red: '#d1393e',
+}
 
 function clampProgress(progress: number): number {
   return Math.min(100, Math.max(0, Number.isFinite(progress) ? progress : 0))
@@ -45,8 +52,19 @@ async function resolveSvg(source: LogoMotionSource, fetcher: typeof fetch): Prom
   return parseSvg(await response.text())
 }
 
+function applyTint(svg: SVGSVGElement, tint: LogoMotionTint): void {
+  if (tint === 'source') return
+  const color = TINTS[tint]
+  for (const element of svg.querySelectorAll<SVGElement>('*')) {
+    const fill = element.getAttribute('fill')
+    const stroke = element.getAttribute('stroke')
+    if (fill && fill !== 'none' && !fill.startsWith('url(')) element.setAttribute('fill', color)
+    if (stroke && stroke !== 'none' && !stroke.startsWith('url(')) element.setAttribute('stroke', color)
+  }
+}
+
 function prepareLayers(svg: SVGSVGElement): void {
-  const children = [...svg.children].filter((child): child is SVGElement => child instanceof SVGElement)
+  const children = [...svg.children].filter((child): child is SVGElement => child instanceof SVGElement && child.localName !== 'defs')
   const layers = children.length > 0 ? children : [...svg.querySelectorAll('path')]
   layers.forEach((layer, index) => {
     layer.classList.add('s-logo-motion__layer')
@@ -62,7 +80,7 @@ function findOrbitSource(svg: SVGSVGElement, selector?: string): SVGGraphicsElem
       const orbit = svg.querySelector<SVGGraphicsElement>(candidate)
       if (orbit && typeof orbit.getBBox === 'function') return orbit
     } catch {
-      // Ignore invalid consumer selectors and continue to safe fallbacks.
+      // Ignore invalid selectors and continue to canonical fallbacks.
     }
   }
   return null
@@ -110,7 +128,7 @@ function prepareOrbit(svg: SVGSVGElement, selector?: string): void {
     anchor.append(rotor)
     svg.append(anchor)
   } catch {
-    // Orbit stays unavailable when geometry cannot be measured.
+    // Orbit remains unavailable only when SVG geometry cannot be measured.
   }
 }
 
@@ -141,9 +159,11 @@ export async function createLogoMotion(source: LogoMotionSource, options: LogoMo
   const label = options.label ?? 'Sleepy Studio'
   const decorative = options.decorative ?? false
   const fetcher = options.fetcher ?? fetch
+  const tint = options.tint ?? 'source'
   let progress = clampProgress(options.progress ?? 0)
 
   const svg = await resolveSvg(source, fetcher)
+  applyTint(svg, tint)
   svg.classList.add('s-logo-motion__svg')
   prepareLayers(svg)
 
@@ -180,4 +200,4 @@ export async function createLogoMotion(source: LogoMotionSource, options: LogoMo
   }
 }
 
-export type { LogoMotionController, LogoMotionMode, LogoMotionOptions, LogoMotionSource } from './types'
+export type { LogoMotionController, LogoMotionMode, LogoMotionOptions, LogoMotionSource, LogoMotionTint } from './types'
