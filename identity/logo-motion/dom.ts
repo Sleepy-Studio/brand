@@ -93,13 +93,83 @@ function getViewBox(svg: SVGSVGElement): DOMRect {
   return new DOMRect(box.x, box.y, box.width, box.height)
 }
 
+function ensureDefs(svg: SVGSVGElement): SVGDefsElement {
+  const existing = svg.querySelector<SVGDefsElement>(':scope > defs')
+  if (existing) return existing
+  const defs = document.createElementNS(SVG_NS, 'defs')
+  svg.prepend(defs)
+  return defs
+}
+
+function isolateCanonicalTopCircle(svg: SVGSVGElement, source: SVGGraphicsElement): {
+  copy: SVGGraphicsElement
+  centerX: number
+  centerY: number
+  radius: number
+} {
+  const viewBox = getViewBox(svg)
+  const centerX = viewBox.x + viewBox.width * 0.5
+  const centerY = viewBox.y + viewBox.height * 0.072
+  const radius = Math.min(viewBox.width, viewBox.height) * 0.073
+  const defs = ensureDefs(svg)
+  const idSeed = Math.random().toString(36).slice(2, 9)
+
+  const clipPath = document.createElementNS(SVG_NS, 'clipPath')
+  const clipId = `s-logo-motion-orbit-clip-${idSeed}`
+  clipPath.id = clipId
+  clipPath.setAttribute('clipPathUnits', 'userSpaceOnUse')
+  const clipCircle = document.createElementNS(SVG_NS, 'circle')
+  clipCircle.setAttribute('cx', String(centerX))
+  clipCircle.setAttribute('cy', String(centerY))
+  clipCircle.setAttribute('r', String(radius))
+  clipPath.append(clipCircle)
+  defs.append(clipPath)
+
+  const mask = document.createElementNS(SVG_NS, 'mask')
+  const maskId = `s-logo-motion-orbit-mask-${idSeed}`
+  mask.id = maskId
+  mask.setAttribute('maskUnits', 'userSpaceOnUse')
+  mask.setAttribute('x', String(viewBox.x))
+  mask.setAttribute('y', String(viewBox.y))
+  mask.setAttribute('width', String(viewBox.width))
+  mask.setAttribute('height', String(viewBox.height))
+
+  const maskBase = document.createElementNS(SVG_NS, 'rect')
+  maskBase.setAttribute('x', String(viewBox.x))
+  maskBase.setAttribute('y', String(viewBox.y))
+  maskBase.setAttribute('width', String(viewBox.width))
+  maskBase.setAttribute('height', String(viewBox.height))
+  maskBase.setAttribute('fill', 'white')
+
+  const maskCircle = document.createElementNS(SVG_NS, 'circle')
+  maskCircle.setAttribute('cx', String(centerX))
+  maskCircle.setAttribute('cy', String(centerY))
+  maskCircle.setAttribute('r', String(radius * 1.015))
+  maskCircle.setAttribute('fill', 'black')
+  mask.append(maskBase, maskCircle)
+  defs.append(mask)
+
+  source.setAttribute('mask', `url(#${maskId})`)
+  source.classList.add('s-logo-motion__orbit-source')
+
+  const copy = source.cloneNode(true) as SVGGraphicsElement
+  copy.removeAttribute('id')
+  copy.removeAttribute('mask')
+  copy.classList.remove('s-logo-motion__layer', 's-logo-motion__orbit-source')
+  copy.classList.add('s-logo-motion__orbit-copy')
+  copy.setAttribute('clip-path', `url(#${clipId})`)
+
+  return { copy, centerX, centerY, radius }
+}
+
 function prepareOrbit(svg: SVGSVGElement, selector?: string): void {
   const source = findOrbitSource(svg, selector)
   if (!source) return
   try {
     const viewBox = getViewBox(svg)
     const contentBox = svg.getBBox()
-    const sourceBox = source.getBBox()
+    const canonical = selector ? null : isolateCanonicalTopCircle(svg, source)
+    const sourceBox = canonical ? new DOMRect(canonical.centerX - canonical.radius, canonical.centerY - canonical.radius, canonical.radius * 2, canonical.radius * 2) : source.getBBox()
     const centerX = viewBox.x + viewBox.width / 2
     const centerY = viewBox.y + viewBox.height / 2
     const sourceCenterX = sourceBox.x + sourceBox.width / 2
@@ -118,12 +188,12 @@ function prepareOrbit(svg: SVGSVGElement, selector?: string): void {
     anchor.setAttribute('transform', `translate(${centerX} ${centerY})`)
     const rotor = document.createElementNS(SVG_NS, 'g')
     rotor.classList.add('s-logo-motion__orbit-rotor')
-    const copy = source.cloneNode(true) as SVGGraphicsElement
+    const copy = canonical?.copy ?? source.cloneNode(true) as SVGGraphicsElement
     copy.removeAttribute('id')
     copy.classList.remove('s-logo-motion__layer')
     copy.classList.add('s-logo-motion__orbit-copy')
     copy.setAttribute('transform', `translate(${-sourceCenterX} ${-orbitRadius - sourceCenterY})`)
-    source.classList.add('s-logo-motion__orbit-source')
+    if (!canonical) source.classList.add('s-logo-motion__orbit-source')
     rotor.append(copy)
     anchor.append(rotor)
     svg.append(anchor)
