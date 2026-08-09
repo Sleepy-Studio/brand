@@ -1,0 +1,39 @@
+name: Generate canonical yellow WebP
+
+on:
+  push:
+    branches:
+      - feat/runtime-asset-catalog-social-actions
+    paths:
+      - 'logos/svg/LogoYellow.svg'
+      - 'scripts/generate-logo-raster.mjs'
+
+permissions:
+  contents: write
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 11.13.1
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm logos:generate-raster
+      - name: Commit generated WebP
+        run: |
+          if git diff --quiet -- logos/webp/LogoYellow.webp; then
+            exit 0
+          fi
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add logos/webp/LogoYellow.webp
+          git commit -m 'chore: generate canonical yellow WebP'
+          git push
