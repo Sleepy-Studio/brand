@@ -9,6 +9,7 @@ const redPath = join(root, 'logos/svg/LogoRed.svg')
 
 const source = await readFile(sourcePath, 'utf8')
 
+// Pure variants keep the exact mixed-logo geometry and only normalize color.
 function recolor(svg, color) {
   return svg
     .replaceAll('#c73639ff', `${color}ff`)
