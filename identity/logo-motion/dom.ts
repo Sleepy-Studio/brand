@@ -178,7 +178,14 @@ function prepareOrbit(svg: SVGSVGElement, selector?: string): void {
   }
 }
 
-function setAccessibility(element: HTMLDivElement, mode: LogoMotionMode, label: string, decorative: boolean, progress: number): void {
+function setAccessibility(
+  element: HTMLDivElement,
+  mode: LogoMotionMode,
+  label: string,
+  decorative: boolean,
+  progress: number,
+  progressDeterminate: boolean,
+): void {
   if (decorative) {
     element.setAttribute('aria-hidden', 'true')
     element.removeAttribute('role')
@@ -190,7 +197,7 @@ function setAccessibility(element: HTMLDivElement, mode: LogoMotionMode, label: 
     element.setAttribute('role', 'progressbar')
     element.setAttribute('aria-valuemin', '0')
     element.setAttribute('aria-valuemax', '100')
-    if (mode === 'progress') element.setAttribute('aria-valuenow', String(progress))
+    if (mode === 'progress' && progressDeterminate) element.setAttribute('aria-valuenow', String(progress))
     else element.removeAttribute('aria-valuenow')
   } else {
     element.setAttribute('role', 'img')
@@ -206,6 +213,7 @@ export async function createLogoMotion(source: LogoMotionSource, options: LogoMo
   const decorative = options.decorative ?? false
   const fetcher = options.fetcher ?? fetch
   const tint = options.tint ?? 'source'
+  let progressDeterminate = options.progress !== undefined
   let progress = clampProgress(options.progress ?? 0)
 
   const svg = await resolveSvg(source, fetcher)
@@ -216,6 +224,7 @@ export async function createLogoMotion(source: LogoMotionSource, options: LogoMo
   const element = document.createElement('div')
   element.className = `s-logo-motion${options.className ? ` ${options.className}` : ''}`
   element.dataset.mode = mode
+  element.dataset.progress = progressDeterminate ? 'determinate' : 'indeterminate'
   element.style.setProperty('--s-logo-motion-progress', `${progress}%`)
   element.append(svg)
   prepareOrbit(svg, options.orbitSelector)
@@ -228,19 +237,21 @@ export async function createLogoMotion(source: LogoMotionSource, options: LogoMo
   progressLayer.append(progressSvg)
   element.append(progressLayer)
 
-  setAccessibility(element, mode, label, decorative, progress)
+  setAccessibility(element, mode, label, decorative, progress, progressDeterminate)
 
   return {
     element,
     svg,
     setMode(nextMode) {
       element.dataset.mode = nextMode
-      setAccessibility(element, nextMode, label, decorative, progress)
+      setAccessibility(element, nextMode, label, decorative, progress, progressDeterminate)
     },
     setProgress(nextProgress) {
+      progressDeterminate = true
       progress = clampProgress(nextProgress)
+      element.dataset.progress = 'determinate'
       element.style.setProperty('--s-logo-motion-progress', `${progress}%`)
-      if (element.dataset.mode === 'progress' && !decorative) element.setAttribute('aria-valuenow', String(progress))
+      setAccessibility(element, element.dataset.mode as LogoMotionMode, label, decorative, progress, progressDeterminate)
     },
     destroy() { element.remove() },
   }
