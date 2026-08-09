@@ -38,7 +38,10 @@
       "name": "Logo Yellow",
       "description": "Yellow Sleepy Studio logo using the canonical Brand yellow",
       "added": "2026-08-07",
-      "variants": [{ "format": "svg", "file": "logos/svg/LogoYellow.svg", "size_kb": 1.0, "url": "https://raw.githubusercontent.com/Sleepy-Studio/brand/main/logos/svg/LogoYellow.svg", "mime": "image/svg+xml" }]
+      "variants": [
+        { "format": "svg", "file": "logos/svg/LogoYellow.svg", "size_kb": 1.0, "url": "https://raw.githubusercontent.com/Sleepy-Studio/brand/main/logos/svg/LogoYellow.svg", "mime": "image/svg+xml" },
+        { "format": "webp", "file": "logos/webp/LogoYellow.webp", "size_kb": 17.49, "url": "https://raw.githubusercontent.com/Sleepy-Studio/brand/main/logos/webp/LogoYellow.webp", "mime": "image/webp" }
+      ]
     },
     {
       "id": "logo-3d",
