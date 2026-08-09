@@ -8,9 +8,16 @@
     {
       "id": "logo-black",
       "name": "Logo Black",
-      "description": "Black variant of the Sleepy Studio logo",
+      "description": "Canonical black Sleepy Studio logo generated from the black-red source geometry using the Brand black token",
       "added": "2026-08-02",
       "variants": [{ "format": "svg", "file": "logos/svg/LogoBlack.svg", "size_kb": 10.06, "url": "https://raw.githubusercontent.com/Sleepy-Studio/brand/main/logos/svg/LogoBlack.svg", "mime": "image/svg+xml" }]
+    },
+    {
+      "id": "logo-red",
+      "name": "Logo Red",
+      "description": "Canonical red Sleepy Studio logo generated from the black-red source geometry using the Brand red token",
+      "added": "2026-08-09",
+      "variants": [{ "format": "svg", "file": "logos/svg/LogoRed.svg", "size_kb": 10.0, "url": "https://raw.githubusercontent.com/Sleepy-Studio/brand/main/logos/svg/LogoRed.svg", "mime": "image/svg+xml" }]
     },
     {
       "id": "logo-black-red",
