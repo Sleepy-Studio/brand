@@ -5,6 +5,7 @@ on:
     branches:
       - feat/runtime-asset-catalog-social-actions
     paths:
+      - '.github/workflows/generate-logo-raster.yml'
       - 'logos/svg/LogoBlackRed.svg'
       - 'logos/svg/LogoYellow.svg'
       - 'scripts/generate-logo-color-variants.mjs'
@@ -28,7 +29,7 @@ jobs:
         with:
           node-version: 22
           cache: pnpm
-      - run: pnpm install --frozen-lockfile
+      - run: pnpm install --no-frozen-lockfile
       - run: pnpm logos:generate-colors
       - run: pnpm logos:generate-raster
       - name: Commit generated logo variants
