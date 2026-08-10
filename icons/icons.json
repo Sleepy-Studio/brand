@@ -24,6 +24,7 @@
     "add": { "source": "lucide", "glyph": "plus" },
     "search": { "source": "lucide", "glyph": "search" },
     "menu": { "source": "lucide", "glyph": "menu" },
+    "store": { "source": "lucide", "glyph": "shopping-bag" },
     "github": { "source": "static", "file": "github.svg" },
     "x": { "source": "static", "file": "x.svg" }
   }
