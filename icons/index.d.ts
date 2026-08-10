@@ -11,6 +11,7 @@ export type BrandIconId =
   | 'add'
   | 'search'
   | 'menu'
+  | 'store'
   | 'github'
   | 'x'
 

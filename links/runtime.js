@@ -3,6 +3,7 @@ export const brandLinks = Object.freeze({
   sponsors: 'https://github.com/sponsors/sleepy-studio',
   x: 'https://x.com/TheSleepyStudio',
   website: 'https://sleepystudio.xyz',
+  store: 'https://store.sleepystudio.xyz/',
   email: 'mailto:Contact@SleepyStudio.xyz',
 })
 
