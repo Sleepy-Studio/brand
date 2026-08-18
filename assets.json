@@ -1,6 +1,6 @@
 {
   "$schema": "https://raw.githubusercontent.com/Sleepy-Studio/contracts/main/schemas/asset-manifest.schema.json",
-  "version": "1.2.0",
+  "version": "1.3.0",
   "ref": "main",
   "repository": "https://github.com/Sleepy-Studio/brand",
   "description": "Sleepy Studio canonical asset manifest. Runtime consumers should resolve installed assets through @sleepy-studio/brand/assets/runtime; production manifests should use release-tagged URLs.",
@@ -56,6 +56,27 @@
       "description": "3D model of the Sleepy Studio logo",
       "added": "2026-08-02",
       "variants": [{ "format": "glb", "file": "logos/glb/SleepyLogo3d.glb", "size_kb": 819.83, "url": "https://raw.githubusercontent.com/Sleepy-Studio/brand/main/logos/glb/SleepyLogo3d.glb", "mime": "model/gltf-binary" }]
+    },
+    {
+      "id": "sleepy-wordmark-motion",
+      "name": "Sleepy Wordmark Motion",
+      "description": "Canonical animated SLEEPY wordmark identity used for the staged E flickers and top-mark replacement sequence",
+      "added": "2026-08-18",
+      "variants": [{ "format": "svg", "file": "identity/sleepy-wordmark-motion/sleepy-wordmark-animated.svg", "size_kb": 13.0, "url": "https://raw.githubusercontent.com/Sleepy-Studio/brand/main/identity/sleepy-wordmark-motion/sleepy-wordmark-animated.svg", "mime": "image/svg+xml" }]
+    },
+    {
+      "id": "sleepy-wordmark-motion-top-mark",
+      "name": "Sleepy Wordmark Motion Top Mark",
+      "description": "Exact isolated top-mark geometry used by Sleepy Wordmark Motion replacement frames",
+      "added": "2026-08-18",
+      "variants": [{ "format": "svg", "file": "identity/sleepy-wordmark-motion/sleepy-top-isolated.svg", "size_kb": 2.5, "url": "https://raw.githubusercontent.com/Sleepy-Studio/brand/main/identity/sleepy-wordmark-motion/sleepy-top-isolated.svg", "mime": "image/svg+xml" }]
+    },
+    {
+      "id": "sleepy-wordmark-motion-top-mark-gold-ring",
+      "name": "Sleepy Wordmark Motion Top Mark Gold Ring",
+      "description": "Isolated top-mark replacement frame with the ring in canonical Sleepy yellow-gold",
+      "added": "2026-08-18",
+      "variants": [{ "format": "svg", "file": "identity/sleepy-wordmark-motion/sleepy-top-isolated-gold-ring.svg", "size_kb": 5.1, "url": "https://raw.githubusercontent.com/Sleepy-Studio/brand/main/identity/sleepy-wordmark-motion/sleepy-top-isolated-gold-ring.svg", "mime": "image/svg+xml" }]
     },
     {
       "id": "favicon",
