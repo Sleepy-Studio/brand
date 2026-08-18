@@ -1,0 +1,71 @@
+.sleepy-wordmark-motion {
+  display: inline-flex;
+  align-items: flex-end;
+  visibility: visible;
+  opacity: 1;
+}
+
+.sleepy-wordmark-motion__wordmark {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 1343 / 391;
+  border: 0;
+  overflow: visible;
+  pointer-events: none;
+}
+
+.sleepy-wordmark-motion--frens {
+  gap: clamp(.35rem, 1.2vw, .65rem);
+}
+
+.sleepy-wordmark-motion--frens .sleepy-wordmark-motion__wordmark {
+  width: clamp(8rem, 18vw, 14rem);
+  max-width: 58%;
+  flex: 0 1 auto;
+  filter: drop-shadow(0 0 12px color-mix(in srgb, #fff 12%, transparent));
+}
+
+.sleepy-wordmark-motion__frens {
+  margin-bottom: -.04em;
+  color: var(--sleepy-color-brand-yellow, #f5c84b);
+  font-family: 'Instrument Serif', Georgia, serif;
+  font-size: clamp(2.15rem, 4.8vw, 4.25rem);
+  line-height: .78;
+  letter-spacing: -.045em;
+  white-space: nowrap;
+}
+
+.sleepy-wordmark-motion__colon {
+  display: inline-block;
+  margin-left: .24em;
+  animation: sleepy-wordmark-motion-colon-blink 10.8s ease-in-out infinite;
+}
+
+@keyframes sleepy-wordmark-motion-colon-blink {
+  0%, 70%, 84%, 100% { opacity: 1; }
+  77% { opacity: .12; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sleepy-wordmark-motion__colon {
+    animation: none;
+    opacity: 1;
+  }
+}
+
+@media (max-width: 720px) {
+  .sleepy-wordmark-motion--frens {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .sleepy-wordmark-motion--frens .sleepy-wordmark-motion__wordmark {
+    width: min(52vw, 10rem);
+    max-width: 52%;
+  }
+
+  .sleepy-wordmark-motion__frens {
+    font-size: clamp(1.9rem, 10vw, 3.2rem);
+  }
+}
