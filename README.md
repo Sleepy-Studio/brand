@@ -48,8 +48,19 @@ Canonical logo variants are exported from `@sleepy-studio/brand/logos` and throu
 Brand also owns identity-specific renderers:
 
 - LogoMotion
+- SleepyWordmarkMotion
 - LogoAscii
 - AudioReactiveLogo
+
+`SleepyWordmarkMotion` is the canonical animated SLEEPY wordmark identity. Its `wordmark` variant renders the animated mark alone. Its `frens` variant composes the same animation with the canonical yellow `frens` label and the spaced, low-frequency blinking colon.
+
+```ts
+import { createSleepyWordmarkMotion } from '@sleepy-studio/brand/identity/sleepy-wordmark-motion'
+import '@sleepy-studio/brand/identity/sleepy-wordmark-motion/style.css'
+
+const wordmark = createSleepyWordmarkMotion()
+const frens = createSleepyWordmarkMotion({ variant: 'frens' })
+```
 
 These are identity behavior, not generic Components loading primitives. Components owns generic Spinner and Progress instead.
 
