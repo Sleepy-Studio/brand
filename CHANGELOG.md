@@ -13,6 +13,14 @@ Track of all assets in the branding repository, including add dates, updates, an
 | `logos/svg/LogoWhite.svg` | SVG | 10 KB | 2026-08-02 | active | White variant, dark backgrounds |
 | `logos/svg/LogoWhiteRed.svg` | SVG | 10 KB | 2026-08-02 | active | White with red accent |
 
+### Identity motion
+
+| File | Format | Added | Status | Notes |
+|------|--------|-------|--------|-------|
+| `identity/sleepy-wordmark-motion/sleepy-wordmark-animated.svg` | SVG | 2026-08-18 | active | Canonical animated SLEEPY wordmark with staged E flickers and top-mark replacement frames |
+| `identity/sleepy-wordmark-motion/sleepy-top-isolated.svg` | SVG | 2026-08-18 | active | Exact isolated top-mark replacement geometry |
+| `identity/sleepy-wordmark-motion/sleepy-top-isolated-gold-ring.svg` | SVG | 2026-08-18 | active | Replacement frame with canonical yellow-gold ring |
+
 ### Characters
 
 | File | Format | Size | Added | Status | Notes |
@@ -42,6 +50,11 @@ Track of all assets in the branding repository, including add dates, updates, an
 
 ## Version History
 
+### v1.3.0 (2026-08-18)
+- Added `SleepyWordmarkMotion` Brand identity renderer
+- Added `wordmark` and `frens` variants
+- Preserved the Dreamplay-developed E flicker, isolated top-mark replacement, gold-ring frames, zero middle/replacement overlap, and low-frequency frens colon cadence as canonical Brand behavior
+
 ### v1.2.0 (2026-08-04)
 - Added canonical `favicon.ico` (16/24/32/64px) and `favicon` manifest entry
 - Documented icon-only sticky-header pattern in site kit component patterns
@@ -66,5 +79,5 @@ When assets are updated or deprecated, this log will note:
 
 ---
 
-**Last Updated**: 2026-08-02  
+**Last Updated**: 2026-08-18  
 **Maintained By**: Sleepy Studio Brand Team
