@@ -32,9 +32,24 @@ Brand owns logo-specific behavior and presentation:
 
 ```ts
 import { createLogoMotion } from '@sleepy-studio/brand/identity/logo-motion'
+import { createSleepyWordmarkMotion } from '@sleepy-studio/brand/identity/sleepy-wordmark-motion'
 import { createLogoAscii } from '@sleepy-studio/brand/identity/logo-ascii'
 import { createAudioReactiveLogo } from '@sleepy-studio/brand/identity/audio-reactive-logo'
+
+import '@sleepy-studio/brand/identity/sleepy-wordmark-motion/style.css'
 ```
+
+`createSleepyWordmarkMotion()` renders the canonical animated SLEEPY wordmark. The exact homepage-style ecosystem lockup is available through the Brand-owned identity variant:
+
+```ts
+const wordmark = createSleepyWordmarkMotion()
+const frens = createSleepyWordmarkMotion({ variant: 'frens' })
+
+mount.append(wordmark.element)
+otherMount.append(frens.element)
+```
+
+The `frens` variant keeps the same SLEEPY animation and adds the canonical yellow `frens` label plus the widely spaced, low-frequency blinking colon. Consumers must not recreate the E timing, top-mark replacement, gold-ring frames, or colon cadence downstream.
 
 Use generic `Spinner` and `Progress` from `@sleepy-studio/components` for interface loading state. Use Brand identity renderers only when the Sleepy Studio mark itself is the visual state.
 
